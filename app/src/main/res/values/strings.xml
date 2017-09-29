@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">Dietanabol</string>
+    <string name="action_settings">Ustawienia</string>
+
+    <string name="diet">Dieta</string>
+    <string name="shopping">Zakupy</string>
+    <string name="notifications">Powiadomienia</string>
+    <string name="products">Produkty</string>
+
+    <string name="days_prompt">Zmień dzień tygodnia. W celu edycji diety kliknij w długopis poniżej.</string>
+    <string name="add_meal">Dodaj posiłek</string>
+    <string name="delete_meal">Usuń posiłek</string>
+
+
+    <string-array name="days">
+        <item>Poniedziałek</item>
+        <item>Wtorek</item>
+        <item>Środa</item>
+        <item>Czwartek</item>
+        <item>Piątek</item>
+        <item>Sobota</item>
+        <item>Niedziela</item>
+    </string-array>
+
+
+    <string name="add_product">Dodaj produkt</string>
+    <string name="delete_product">Usuń produkt</string>
+    <string name="product_name">Nazwa produktu:</string>
+    <string name="grams_or_pieces">Ilość gramy/sztuki:</string>
+    <string name="is_regularly_purchased">Czy jest regularnie kupowany?</string>
+    <string name="grams">g</string>
+    <string name="pieces">szt.</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="product_ID">Nr</string>
+    <string name="product_grams_or_pieces">g/szt.</string>
+    <string name="product_is_regularly_purchased">Czy reg.?</string>
+    <string name="product_quantity">Ilość:</string>
+    <string name="lack_of_product">Wprowadź produkt przed zapisaniem.</string>
+    <string name="exit_without_saving">Czy na pewno chcesz wyjść? Wprowadzone zmiany nie zostaną zapisane.</string>
+    <string name="i_want_to_exit">Chcę wyjść</string>
+    <string name="i_want_to_stay">Zostaję</string>
+
+    <string name="title_activity_diet">Dieta</string>
+    <string name="title_activity_shopping">Zakupy</string>
+    <string name="title_activity_products">Produkty</string>
+    <string name="title_activity_add_product">Dodawanie produktu</string>
+    <string name="title_activity_add_meal">Dodawanie posiłku</string>
+    <string name="day_of_the_week">Dzień tygodnia:</string>
+    <string name="hour">Godzina:</string>
+    <string name="type_of_meal">Rodzaj posiłku:</string>
+    <string name="ingredient">Składnik:</string>
+    <string name="add_next_ingredient">Dodaj kolejny składnik</string>
+    <string name="preview">Podgląd:</string>
+
+    <string-array name="types_of_meal">
+        <item>Śniadanie</item>
+        <item>Lunch</item>
+        <item>Obiad</item>
+        <item>Poobiadowy</item>
+        <item>Przedtreningowy</item>
+        <item>Potreningowy</item>
+        <item>Kolacja</item>
+    </string-array>
+
+</resources>
