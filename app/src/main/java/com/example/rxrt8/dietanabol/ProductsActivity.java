@@ -33,14 +33,14 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
     private void fillTheTable() {
-        BaseManager baseManager = new BaseManager(this);
+        ProductsBaseManager productsBaseManager = new ProductsBaseManager(this);
         productsID = (TextView)findViewById(R.id.productsIDTV);
         productsName = (TextView)findViewById(R.id.productsNameTV);
         productsGramsOrPieces = (TextView)findViewById(R.id.productsGramsOrPiecesTV);
         productsIsRegularlyPurchased = (TextView)findViewById(R.id.productsIsRegularlyPurchasedTV);
         productsQuantity = (TextView)findViewById(R.id.productsQuantityTV);
 
-        for(FoodProduct k:baseManager.giveAll()){
+        for(FoodProduct k:productsBaseManager.giveAll()){
             productsID.setText(productsID.getText()+"\n"+ k.getNr());
             productsName.setText(productsName.getText()+"\n"+k.getProductName());
             if(k.isGramsOrPieces())

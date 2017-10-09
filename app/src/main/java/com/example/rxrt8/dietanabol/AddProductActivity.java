@@ -35,7 +35,7 @@ public class AddProductActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final BaseManager baseManager = new BaseManager(this);
+        final ProductsBaseManager productsBaseManager = new ProductsBaseManager(this);
 
         productName = (EditText) findViewById(R.id.productNameET);
         gramsOrPieces = (Switch) findViewById(R.id.gramsOrPiecesSwitch);
@@ -50,7 +50,7 @@ public class AddProductActivity extends AppCompatActivity {
                     foodProduct.setProductName(productName.getText().toString());
                     foodProduct.setGramsOrPieces(gramsOrPieces.isChecked());
                     foodProduct.setRegularlyPurchased(isRegularlyPurchased.isChecked());
-                    baseManager.addFoodProduct(foodProduct);
+                    productsBaseManager.addFoodProduct(foodProduct);
                     Intent intent = new Intent(AddProductActivity.this, ProductsActivity.class);
                     startActivity(intent);
                 }
