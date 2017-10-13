@@ -53,6 +53,11 @@ public class ProductsActivity extends AppCompatActivity {
                 productsIsRegularlyPurchased.setText(productsIsRegularlyPurchased.getText()+"\n"+getResources().getString(R.string.no));
             productsQuantity.setText(productsQuantity.getText()+"\n"+k.getQuantity());
         }
+
+        for(FoodProduct f:productsBaseManager.giveByName("jerzyny")){
+            Log.d("dane z bazy:", String.valueOf(f.getNr()));
+            break;
+        }
     }
 
 

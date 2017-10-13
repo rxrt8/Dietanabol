@@ -53,6 +53,7 @@
     <string name="add_next_ingredient">Dodaj kolejny składnik</string>
     <string name="preview">Podgląd:</string>
     <string name="lack_of_meal">Wprowadź posiłek przed zapisaniem.</string>
+    <string name="lack_of_quantity_and_hour">Uzupełnij aktualny posiłek przed dodaniem kolejnego.</string>
 
     <string-array name="types_of_meal">
         <item>Śniadanie</item>

@@ -88,6 +88,8 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
     }
 
 
+
+
     //NIE DZIALA
     public FoodProduct giveFoodProduct(int nr){
         FoodProduct foodProduct = new FoodProduct();
@@ -96,14 +98,35 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
         String args[]={nr+""};
         Cursor cursor=db.query("Products",columns," nr=?",args,null,null,null,null);
         while(cursor!=null){
-            cursor.moveToFirst();
+            /*cursor.moveToFirst();
+            foodProduct.setNr(cursor.getInt(0));
+            foodProduct.setProductName(cursor.getString(1));
+            foodProduct.setGramsOrPieces(!cursor.isNull(2));
+            foodProduct.setRegularlyPurchased(!cursor.isNull(3));
+            foodProduct.setQuantity(cursor.getInt(4));*/
+        }
+        foodProduct.setNr(1);
+        foodProduct.setProductName("slowo");
+        return foodProduct;
+    }
+
+    public List<FoodProduct> giveByName(String productName){
+        List<FoodProduct> foodProducts = new LinkedList<FoodProduct>();
+        String[] columns={"nr","name","gramsOrPieces","isRegularlyPurchased","quantity"};
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor =db.rawQuery("select nr,name,gramsOrPieces,isRegularlyPurchased,quantity from Products where name='"
+                +productName+
+                "' order by nr asc", null);
+        while(cursor.moveToNext()){
+            FoodProduct foodProduct = new FoodProduct();
             foodProduct.setNr(cursor.getInt(0));
             foodProduct.setProductName(cursor.getString(1));
             foodProduct.setGramsOrPieces(!cursor.isNull(2));
             foodProduct.setRegularlyPurchased(!cursor.isNull(3));
             foodProduct.setQuantity(cursor.getInt(4));
+            foodProducts.add(foodProduct);
         }
-        return foodProduct;
+        return foodProducts;
     }
 
 
