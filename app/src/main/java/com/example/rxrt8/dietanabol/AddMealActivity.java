@@ -20,9 +20,9 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 public class AddMealActivity extends AppCompatActivity {
 
@@ -31,11 +31,12 @@ public class AddMealActivity extends AppCompatActivity {
     private EditText hour;
     private EditText quantity;
     private ArrayList<String> productsName;
-    private ArrayList<Integer> prodMealKeys;
+    private ArrayList<Integer> prodMealKeys = new ArrayList<>();
     private int numberOfIngredients = 0;
     private Spinner ingredient;
     private Switch gramsOrPieces;
     private Button addNextIngredient;
+    private boolean createdMeal = FALSE;
     private final MealsBaseManager mealsBaseManager = new MealsBaseManager(this);
     private final ProdMealBaseManager prodMealBaseManager = new ProdMealBaseManager(this);
     private final ProductsBaseManager productsBaseManager = new ProductsBaseManager(this);
@@ -45,10 +46,10 @@ public class AddMealActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_add_meal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         dayOfTheWeek = (Spinner) findViewById(R.id.dayOfTheWeekSpinner);
         hour = (EditText) findViewById(R.id.timeET);
@@ -92,12 +93,15 @@ public class AddMealActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(numberOfIngredients!=0 || hour.getText().length()!=0&&quantity.getText().length()!=0) {
+                    if(!createdMeal) {
+                        Meal meal = new Meal();
+                        meal.setMealName(typeOfMeal.getSelectedItem().toString());
+                        meal.setDay(dayOfTheWeek.getSelectedItem().toString());
+                        meal.setHour(hour.getText().toString());
+                        mealsBaseManager.addMeal(meal);
+                        createdMeal = TRUE;
+                    }
                     addNextIngredient(view);
-                    Meal meal = new Meal();
-                    meal.setMealName(typeOfMeal.getSelectedItem().toString());
-                    meal.setDay(dayOfTheWeek.getSelectedItem().toString());
-                    meal.setHour(hour.getText().toString());
-                    mealsBaseManager.addMeal(meal);
                     Intent intent = new Intent(AddMealActivity.this, DietActivity.class);
                     startActivity(intent);
                 }
@@ -116,12 +120,21 @@ public class AddMealActivity extends AppCompatActivity {
             Log.d("dane z bazy posiłków",String.valueOf(m.getNr()) + " " + m.getDay() + " " + m.getMealName() + " " + m.getHour());
         }
         for(ProdMeal m:prodMealBaseManager.giveAll()){
-            Log.d("dane z bazy kluczy",String.valueOf(m.getId()) + " " + m.getProdId() + " " + m.getMealId() + " " + m.getQuantity());
+            Log.d("dane z bazy kluczy",String.valueOf(m.getId()) + " prod " + m.getProdId() + " meal " + m.getMealId() + " ilosc " + m.getQuantity());
         }
+
     }
 
 
     public void addNextIngredient(View view){
+        if(numberOfIngredients==0 && !createdMeal){
+                Meal meal = new Meal();
+                meal.setMealName(typeOfMeal.getSelectedItem().toString());
+                meal.setDay(dayOfTheWeek.getSelectedItem().toString());
+                meal.setHour(hour.getText().toString());
+                mealsBaseManager.addMeal(meal);
+                createdMeal = TRUE;
+        }
         if(hour.getText().length()!=0&&quantity.getText().length()!=0) {
             dayOfTheWeek.setEnabled(FALSE);
             typeOfMeal.setEnabled(FALSE);
@@ -129,9 +142,10 @@ public class AddMealActivity extends AppCompatActivity {
             numberOfIngredients++;
             for(FoodProduct f:productsBaseManager.giveByName(ingredient.getSelectedItem().toString())){
                 ProdMeal prodMeal = new ProdMeal();
-                prodMeal.setMealId(mealsBaseManager.getLastId()+1);
+                prodMeal.setMealId(mealsBaseManager.getLastId());
                 prodMeal.setProdId(f.getNr());
                 prodMeal.setQuantity(Integer.parseInt(quantity.getText().toString()));
+                productsBaseManager.addTheAmountOfFood(f, prodMeal.getQuantity());
                 prodMealBaseManager.addKey(prodMeal);
                 prodMealKeys.add(prodMealBaseManager.getLastId());
                 break;
@@ -153,6 +167,11 @@ public class AddMealActivity extends AppCompatActivity {
             showMessageOKCancel(new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    for(int k:prodMealKeys)
+                        prodMealBaseManager.deleteKey(k);
+                    if(createdMeal)
+                        mealsBaseManager.deleteMeal(mealsBaseManager.getLastId());
+
 
                     Intent intent = new Intent(AddMealActivity.this, DietActivity.class);
                     startActivity(intent);

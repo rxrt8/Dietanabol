@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,8 +17,11 @@ import java.util.List;
 
 class ProdMealBaseManager extends SQLiteOpenHelper {
 
+    private Context myContext;
+
     public ProdMealBaseManager(Context context) {
         super(context, "prodmeal.db", null, 1);
+        myContext = context;
     }
 
     @Override
@@ -59,7 +64,33 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
         return keys;
     }
 
-    public void deleteMeal(int id){
+
+    private void deleteTheAmountOfFood(int id){
+        ProductsBaseManager productsBaseManager = new ProductsBaseManager(myContext);
+
+        String[] columns={"nr","prodID","mealID","quantity"};
+        SQLiteDatabase db = getReadableDatabase();
+        String args[]={id+""};
+        Cursor cursor =db.query("ProdMeal",columns," nr=?",args,null,null,null,null);
+
+
+        if(cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            ProdMeal prodMeal = new ProdMeal();
+            prodMeal.setProdId(cursor.getInt(1));
+            prodMeal.setQuantity(cursor.getInt(3));
+            FoodProduct foodProduct = productsBaseManager.giveFoodProduct(prodMeal.getProdId());
+            productsBaseManager.deleteTheAmountOfFood(foodProduct, prodMeal.getQuantity());
+            Log.d("dane us. klucz nr ", String.valueOf(id));
+        }
+    }
+
+    public void deleteKey(int id){
+        deleteTheAmountOfFood(id);
+        deleteKeyBecauseProductWasDeleted(id);
+    }
+
+    public void deleteKeyBecauseProductWasDeleted(int id){
         SQLiteDatabase db = getWritableDatabase();
         String[] arguments={""+id};
         db.delete("ProdMeal", "nr=?", arguments);
@@ -75,4 +106,41 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
         }
         return id;
     }
+
+    public List<ProdMeal> giveByProdID(int productID){
+        List<ProdMeal> keys = new LinkedList<ProdMeal>();
+        String[] columns={"nr","prodID","mealID","quantity"};
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor =db.rawQuery("select nr,prodID,mealID,quantity from ProdMeal where prodID='"
+                +productID+
+                "' order by nr asc", null);
+        while(cursor.moveToNext()){
+            ProdMeal prodMeal = new ProdMeal();
+            prodMeal.setId(cursor.getInt(0));
+            prodMeal.setProdId(cursor.getInt(1));
+            prodMeal.setMealId(cursor.getInt(2));
+            prodMeal.setQuantity(cursor.getInt(3));
+            keys.add(prodMeal);
+        }
+        return keys;
+    }
+
+    public List<ProdMeal> giveByMealID(int mealID){
+        List<ProdMeal> keys = new LinkedList<ProdMeal>();
+        String[] columns={"nr","prodID","mealID","quantity"};
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor =db.rawQuery("select nr,prodID,mealID,quantity from ProdMeal where mealID='"
+                +mealID+
+                "' order by nr asc", null);
+        while(cursor.moveToNext()){
+            ProdMeal prodMeal = new ProdMeal();
+            prodMeal.setId(cursor.getInt(0));
+            prodMeal.setProdId(cursor.getInt(1));
+            prodMeal.setMealId(cursor.getInt(2));
+            prodMeal.setQuantity(cursor.getInt(3));
+            keys.add(prodMeal);
+        }
+        return keys;
+    }
+
 }

@@ -3,6 +3,141 @@
 
     <item
         is-multidex="true"
+        jar="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6462db82343579682c2373bdb9c49b1136110a0a">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_631e39ae424aae0ee3d461bbe71bfde53bfbd26d\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\2ff60480b047f65e445f9b66e8736e4ee2207591\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_530c2f23a3064300f5e004ae48bebd9c5578de0c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\3f1efb9a5217e6e633f452a986ea3aa8b4c64795\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_4249126d2a6b44a258d1b8fb6460cc7fa552d57b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\1d8e2b940950ca10193d8a40dc5949a34f737dd0\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_aa6f59ee68dab8ee970a65b1682941a014407abb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\3f1efb9a5217e6e633f452a986ea3aa8b4c64795\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_28d392d4c9cc98159cc8d0bb91812ae15141060f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\d44352420cac2a1cf30e4f3f30e300d1857b72c8\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_a40163ecadf3307467b601e996f9e32ec49d4423.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\76a02cb1635f137ae1563889184304c7069d6a12\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_4f6ef07b4bb3348e3d56dfdcfee1c710ca64125b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\96579867d5a6dc2dab4c398789e6ef7256d7e683\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_c73d456a6725486648a8c092d8ba3572be30dacd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_761f9de090446edac1b68ec91e5447446f249dee.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\76a02cb1635f137ae1563889184304c7069d6a12\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_f303d749d829c9c93f4ce6c334dfc628d0b3e40c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\d44352420cac2a1cf30e4f3f30e300d1857b72c8\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_e96a36b0d338a3cf7a9c9c7678f1a88dfec5b45f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\f837ed36a75f6d908dc8e7973031dfae405351af\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_8f300a23a4cb10bf5684be66cc180907748bbb20.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\3ee8e29f53e5e4921864325a9f284c710a996e98\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_bdaf2ba64e563a2df0e0d5d07303043bdd8f21ba.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\17fd2a9db172680c59df2886f1bca7ee8ca66fd4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_1da9d357aa00940c68f6e4def5e6ac132333b5bc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\ec7bfdb2ab3c4a9fc4599ca8c52b94ab0f9e974e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_7c6ac4f6deec753a4c3a258cbba426fc1d4db1b8.jar" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
@@ -11,13 +146,49 @@
         <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_e9e1fb87f16ad1916819a9612d09c7bfd305d43a\classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\rxrt8\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
-        sha1="6462db82343579682c2373bdb9c49b1136110a0a">
-        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_631e39ae424aae0ee3d461bbe71bfde53bfbd26d\classes.dex" />
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.1_a3bdffcdb648ba34c45c6df62d5b40f26e2518ac.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\1c02e48fab0e9ad6d16b7e12329d6f20f6a3e509\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_d70b7f61a7e06da6988fabb6c3a2a556859e9fe5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\17fd2a9db172680c59df2886f1bca7ee8ca66fd4\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_2f815ce63acbae7e249cc8c0e167fd466a3690a1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\f837ed36a75f6d908dc8e7973031dfae405351af\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_f0956bd02ec7b97ca3218077c606ddb4818a96ff.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rxrt8\.android\build-cache\57a8bfbda0e64fcd0a1d21d2bd05e2ae159d04b2\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\rxrt8\Documents\GitHub\Dietanabol\app\build\intermediates\pre-dexed\debug\classes_24516e645a02fcbffd7bfd30e897eaa65c052299.jar" />
     </item>
 
 </items>

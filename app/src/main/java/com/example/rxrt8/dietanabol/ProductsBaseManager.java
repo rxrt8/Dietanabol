@@ -56,8 +56,8 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
         String[] arguments={""+id};
         db.delete("Products", "nr=?", arguments);
     }
-    //NIE SPRAWDZONE
-    public void updateTheAmountOfFood(FoodProduct foodProduct, int quantity){
+
+    public void addTheAmountOfFood(FoodProduct foodProduct, int quantity){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", foodProduct.getProductName());
@@ -66,6 +66,25 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
         if(foodProduct.isRegularlyPurchased())
             contentValues.put("isRegularlyPurchased", foodProduct.isRegularlyPurchased());
         contentValues.put("quantity", foodProduct.getQuantity() + quantity);
+        String args[]={foodProduct.getNr()+""};
+        db.update("Products", contentValues,"nr=?",args);
+    }
+
+    public void deleteTheAmountOfFood(FoodProduct foodProduct, int quantity){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", foodProduct.getProductName());
+        if(foodProduct.isGramsOrPieces())
+            contentValues.put("gramsOrPieces", foodProduct.isGramsOrPieces());
+        if(foodProduct.isRegularlyPurchased())
+            contentValues.put("isRegularlyPurchased", foodProduct.isRegularlyPurchased());
+        if(foodProduct.getQuantity() - quantity>0) {
+            contentValues.put("quantity", foodProduct.getQuantity() - quantity);
+        }
+        else{
+            contentValues.put("quantity", 0);
+        }
+
         String args[]={foodProduct.getNr()+""};
         db.update("Products", contentValues,"nr=?",args);
     }
@@ -90,23 +109,22 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
 
 
 
-    //NIE DZIALA
+
     public FoodProduct giveFoodProduct(int nr){
         FoodProduct foodProduct = new FoodProduct();
         String[] columns={"nr","name","gramsOrPieces","isRegularlyPurchased","quantity"};
         SQLiteDatabase db = getReadableDatabase();
         String args[]={nr+""};
         Cursor cursor=db.query("Products",columns," nr=?",args,null,null,null,null);
-        while(cursor!=null){
-            /*cursor.moveToFirst();
+
+        if(cursor.moveToFirst()) {
+            cursor.moveToFirst();
             foodProduct.setNr(cursor.getInt(0));
             foodProduct.setProductName(cursor.getString(1));
             foodProduct.setGramsOrPieces(!cursor.isNull(2));
             foodProduct.setRegularlyPurchased(!cursor.isNull(3));
-            foodProduct.setQuantity(cursor.getInt(4));*/
+            foodProduct.setQuantity(cursor.getInt(4));
         }
-        foodProduct.setNr(1);
-        foodProduct.setProductName("slowo");
         return foodProduct;
     }
 

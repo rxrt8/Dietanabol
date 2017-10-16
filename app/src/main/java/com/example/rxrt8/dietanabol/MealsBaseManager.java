@@ -44,6 +44,12 @@ public class MealsBaseManager extends SQLiteOpenHelper {
         db.insertOrThrow("Meals", null, contentValues);
     }
 
+    public void deleteMeal(int id){
+        SQLiteDatabase db = getWritableDatabase();
+        String[] arguments={""+id};
+        db.delete("Meals", "nr=?", arguments);
+    }
+
     public List<Meal> giveAll(){
         List<Meal> meals = new LinkedList<Meal>();
         String[] columns={"nr","name","day","hour"};

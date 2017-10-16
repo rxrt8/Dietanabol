@@ -54,6 +54,10 @@
     <string name="preview">Podgląd:</string>
     <string name="lack_of_meal">Wprowadź posiłek przed zapisaniem.</string>
     <string name="lack_of_quantity_and_hour">Uzupełnij aktualny posiłek przed dodaniem kolejnego.</string>
+    <string name="product_to_delete">Który produkt chcesz usunąć?</string>
+    <string name="cancel">Anuluj</string>
+    <string name="exit_without_deleting">Czy na pewno chcesz usunąć produkt? Wiąże się to z usunięciem wszystkich posiłków zawierających usunięty produkt.</string>
+    <string name="delete_and_save">Usuń i zapisz</string>
 
     <string-array name="types_of_meal">
         <item>Śniadanie</item>
