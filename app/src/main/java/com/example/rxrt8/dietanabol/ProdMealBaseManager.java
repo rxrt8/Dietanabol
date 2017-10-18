@@ -5,8 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.Nullable;
-import android.util.Log;
+
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,10 +27,10 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "create table ProdMeal(" +
-                        "nr integer primary key autoincrement," +
+                        "id integer primary key autoincrement," +
                         "prodID integer," +
                         "mealID integer," +
-                        "quantity ineger);");
+                        "quantity integer)");
     }
 
     @Override
@@ -41,20 +40,22 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
 
     public void addKey(ProdMeal prodMeal){
         SQLiteDatabase db = getWritableDatabase();
+
         ContentValues contentValues = new ContentValues();
         contentValues.put("prodID", prodMeal.getProdId());
         contentValues.put("mealID", prodMeal.getMealId());
         contentValues.put("quantity", prodMeal.getQuantity());
+
         db.insertOrThrow("ProdMeal", null, contentValues);
     }
 
     public List<ProdMeal> giveAll(){
         List<ProdMeal> keys = new LinkedList<ProdMeal>();
-        String[] columns={"nr","prodID","mealID","quantity"};
+        String[] columns = getColumns();
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor =db.query("ProdMeal",columns,null,null,null,null,null);
         while(cursor.moveToNext()){
-           ProdMeal prodMeal = new ProdMeal();
+            ProdMeal prodMeal = new ProdMeal();
             prodMeal.setId(cursor.getInt(0));
             prodMeal.setProdId(cursor.getInt(1));
             prodMeal.setMealId(cursor.getInt(2));
@@ -68,11 +69,10 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
     private void deleteTheAmountOfFood(int id){
         ProductsBaseManager productsBaseManager = new ProductsBaseManager(myContext);
 
-        String[] columns={"nr","prodID","mealID","quantity"};
+        String[] columns = getColumns();
         SQLiteDatabase db = getReadableDatabase();
-        String args[]={id+""};
-        Cursor cursor =db.query("ProdMeal",columns," nr=?",args,null,null,null,null);
-
+        String args[] = {id+""};
+        Cursor cursor = db.query("ProdMeal",columns," id=?",args,null,null,null,null);
 
         if(cursor.moveToFirst()) {
             cursor.moveToFirst();
@@ -80,26 +80,22 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
             prodMeal.setProdId(cursor.getInt(1));
             prodMeal.setQuantity(cursor.getInt(3));
             FoodProduct foodProduct = productsBaseManager.giveFoodProduct(prodMeal.getProdId());
-            productsBaseManager.deleteTheAmountOfFood(foodProduct, prodMeal.getQuantity());
-            Log.d("dane us. klucz nr ", String.valueOf(id));
+            productsBaseManager.changeTheAmountOfFood(foodProduct, -prodMeal.getQuantity());
         }
     }
 
     public void deleteKey(int id){
         deleteTheAmountOfFood(id);
-        deleteKeyBecauseProductWasDeleted(id);
+        SQLiteDatabase db = getWritableDatabase();
+        String[] arguments = {""+id};
+        db.delete("ProdMeal", "id=?", arguments);
     }
 
-    public void deleteKeyBecauseProductWasDeleted(int id){
-        SQLiteDatabase db = getWritableDatabase();
-        String[] arguments={""+id};
-        db.delete("ProdMeal", "nr=?", arguments);
-    }
 
     public int getLastId(){
-        String[] columns={"nr","prodID","mealID","quantity"};
+        String[] columns = getColumns();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor =db.query("ProdMeal",columns,null,null,null,null,null);
+        Cursor cursor = db.query("ProdMeal",columns,null,null,null,null,null);
         int id = 0;
         while(cursor.moveToNext()){
             id = cursor.getInt(0);
@@ -108,30 +104,23 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
     }
 
     public List<ProdMeal> giveByProdID(int productID){
-        List<ProdMeal> keys = new LinkedList<ProdMeal>();
-        String[] columns={"nr","prodID","mealID","quantity"};
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor =db.rawQuery("select nr,prodID,mealID,quantity from ProdMeal where prodID='"
+        Cursor cursor = db.rawQuery("select id,prodID,mealID,quantity from ProdMeal where prodID='"
                 +productID+
-                "' order by nr asc", null);
-        while(cursor.moveToNext()){
-            ProdMeal prodMeal = new ProdMeal();
-            prodMeal.setId(cursor.getInt(0));
-            prodMeal.setProdId(cursor.getInt(1));
-            prodMeal.setMealId(cursor.getInt(2));
-            prodMeal.setQuantity(cursor.getInt(3));
-            keys.add(prodMeal);
-        }
-        return keys;
+                "' order by id asc", null);
+        return fillProdMealsList(cursor);
     }
 
     public List<ProdMeal> giveByMealID(int mealID){
-        List<ProdMeal> keys = new LinkedList<ProdMeal>();
-        String[] columns={"nr","prodID","mealID","quantity"};
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor =db.rawQuery("select nr,prodID,mealID,quantity from ProdMeal where mealID='"
+        Cursor cursor = db.rawQuery("select id,prodID,mealID,quantity from ProdMeal where mealID='"
                 +mealID+
-                "' order by nr asc", null);
+                "' order by id asc", null);
+        return fillProdMealsList(cursor);
+    }
+
+    private List<ProdMeal> fillProdMealsList(Cursor cursor){
+        List<ProdMeal> keys = new LinkedList<ProdMeal>();
         while(cursor.moveToNext()){
             ProdMeal prodMeal = new ProdMeal();
             prodMeal.setId(cursor.getInt(0));
@@ -142,5 +131,8 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
         }
         return keys;
     }
-
+    private String[] getColumns(){
+        String[] columns = {"id","prodID","mealID","quantity"};
+        return columns;
+    }
 }

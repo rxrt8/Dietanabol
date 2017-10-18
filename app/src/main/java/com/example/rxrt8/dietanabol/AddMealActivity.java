@@ -2,7 +2,6 @@ package com.example.rxrt8.dietanabol;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -35,7 +33,6 @@ public class AddMealActivity extends AppCompatActivity {
     private int numberOfIngredients = 0;
     private Spinner ingredient;
     private Switch gramsOrPieces;
-    private Button addNextIngredient;
     private boolean createdMeal = FALSE;
     private final MealsBaseManager mealsBaseManager = new MealsBaseManager(this);
     private final ProdMealBaseManager prodMealBaseManager = new ProdMealBaseManager(this);
@@ -50,42 +47,8 @@ public class AddMealActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        fillTheActivity();
 
-        dayOfTheWeek = (Spinner) findViewById(R.id.dayOfTheWeekSpinner);
-        hour = (EditText) findViewById(R.id.timeET);
-        typeOfMeal = (Spinner) findViewById(R.id.typeOfMealSpinner);
-        ingredient = (Spinner) findViewById(R.id.ingredientSpinner);
-        gramsOrPieces = (Switch) findViewById(R.id.gramsOrPiecesSwitch);
-        quantity = (EditText) findViewById(R.id.quantityET);
-        addNextIngredient = (Button) findViewById(R.id.addNextIngredientBtn);
-
-
-        productsName = new ArrayList<>();
-        for(FoodProduct k:productsBaseManager.giveAll()){
-            productsName.add(k.getProductName());
-        }
-
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, productsName);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ingredient.setAdapter(spinnerArrayAdapter);
-        gramsOrPieces.setEnabled(FALSE);
-
-        ingredient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                boolean isGramsOrPieces = FALSE;
-                for(FoodProduct f:productsBaseManager.giveByName(ingredient.getSelectedItem().toString())){
-                    isGramsOrPieces = f.isGramsOrPieces();
-                    break;
-                }
-                gramsOrPieces.setChecked(isGramsOrPieces);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -117,12 +80,52 @@ public class AddMealActivity extends AppCompatActivity {
 
         Log.d("dane","nowe wejscie");
         for(Meal m:mealsBaseManager.giveAll()){
-            Log.d("dane z bazy posiłków",String.valueOf(m.getNr()) + " " + m.getDay() + " " + m.getMealName() + " " + m.getHour());
+            Log.d("dane z bazy posiłków",String.valueOf(m.getId()) + " " + m.getDay() + " " + m.getMealName() + " " + m.getHour());
         }
         for(ProdMeal m:prodMealBaseManager.giveAll()){
             Log.d("dane z bazy kluczy",String.valueOf(m.getId()) + " prod " + m.getProdId() + " meal " + m.getMealId() + " ilosc " + m.getQuantity());
         }
 
+    }
+
+    private void fillTheActivity() {
+        dayOfTheWeek = (Spinner) findViewById(R.id.dayOfTheWeekSpinner);
+        hour = (EditText) findViewById(R.id.timeET);
+        typeOfMeal = (Spinner) findViewById(R.id.typeOfMealSpinner);
+        ingredient = (Spinner) findViewById(R.id.ingredientSpinner);
+        gramsOrPieces = (Switch) findViewById(R.id.gramsOrPiecesSwitch);
+        quantity = (EditText) findViewById(R.id.quantityET);
+
+        fillIngredientSpinner();
+    }
+
+    private void fillIngredientSpinner() {
+        productsName = new ArrayList<>();
+        for(FoodProduct k:productsBaseManager.giveAll()){
+            productsName.add(k.getProductName());
+        }
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, productsName);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ingredient.setAdapter(spinnerArrayAdapter);
+        gramsOrPieces.setEnabled(FALSE);
+
+        ingredient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                boolean isGramsOrPieces = FALSE;
+                for(FoodProduct f:productsBaseManager.giveByName(ingredient.getSelectedItem().toString())){
+                    isGramsOrPieces = f.isGramsOrPieces();
+                    break;
+                }
+                gramsOrPieces.setChecked(isGramsOrPieces);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -143,9 +146,9 @@ public class AddMealActivity extends AppCompatActivity {
             for(FoodProduct f:productsBaseManager.giveByName(ingredient.getSelectedItem().toString())){
                 ProdMeal prodMeal = new ProdMeal();
                 prodMeal.setMealId(mealsBaseManager.getLastId());
-                prodMeal.setProdId(f.getNr());
+                prodMeal.setProdId(f.getId());
                 prodMeal.setQuantity(Integer.parseInt(quantity.getText().toString()));
-                productsBaseManager.addTheAmountOfFood(f, prodMeal.getQuantity());
+                productsBaseManager.changeTheAmountOfFood(f, prodMeal.getQuantity());
                 prodMealBaseManager.addKey(prodMeal);
                 prodMealKeys.add(prodMealBaseManager.getLastId());
                 break;

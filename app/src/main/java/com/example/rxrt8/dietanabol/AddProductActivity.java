@@ -26,7 +26,7 @@ public class AddProductActivity extends AppCompatActivity {
     private EditText productName;
     private Switch gramsOrPieces;
     private Switch isRegularlyPurchased;
-
+    private final ProductsBaseManager productsBaseManager = new ProductsBaseManager(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,6 @@ public class AddProductActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ProductsBaseManager productsBaseManager = new ProductsBaseManager(this);
 
         productName = (EditText) findViewById(R.id.productNameET);
         gramsOrPieces = (Switch) findViewById(R.id.gramsOrPiecesSwitch);

@@ -1,25 +1,23 @@
 package com.example.rxrt8.dietanabol;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by rxrt8 on 2017-09-29.
  */
 
 public class Meal {
-    private int nr;
+    private int id;
     private String mealName;
     private String day;
     private String hour;
 
 
-    public int getNr() {
-        return nr;
+    public int getId() {
+        return id;
     }
 
-    public void setNr(int nr) {
-        this.nr = nr;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMealName() {
@@ -45,7 +43,5 @@ public class Meal {
     public void setHour(String hour) {
         this.hour = hour;
     }
-
-
 
 }

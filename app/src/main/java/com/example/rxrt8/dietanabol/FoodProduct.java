@@ -1,26 +1,25 @@
 package com.example.rxrt8.dietanabol;
 
-import android.content.res.Resources;
-
-
 
 /**
  * Created by rxrt8 on 2017-09-13.
  */
 
 public class FoodProduct {
-    private int nr;
+
+    private int id;
     private String productName;
     private boolean gramsOrPieces;
     private boolean regularlyPurchased;
     private int quantity;
 
-    public int getNr() {
-        return nr;
+
+    public int getId() {
+        return id;
     }
 
-    public void setNr(int nr) {
-        this.nr = nr;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getProductName() {

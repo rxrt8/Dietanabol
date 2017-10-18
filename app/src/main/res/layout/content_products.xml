@@ -54,6 +54,7 @@
         android:layout_marginTop="15dp"
         android:layout_below="@+id/productToDeleteSpinner"
         android:layout_alignParentStart="true"
+        android:onClick="click"
         android:text="@string/delete_and_save" />
 
     <Button

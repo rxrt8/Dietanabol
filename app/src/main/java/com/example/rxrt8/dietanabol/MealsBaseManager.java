@@ -23,7 +23,7 @@ public class MealsBaseManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "create table Meals(" +
-                        "nr integer primary key autoincrement," +
+                        "id integer primary key autoincrement," +
                         "name text," +
                         "day text," +
                         "hour text);" +
@@ -37,27 +37,27 @@ public class MealsBaseManager extends SQLiteOpenHelper {
 
     public void addMeal(Meal meal){
         SQLiteDatabase db = getWritableDatabase();
+
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", meal.getMealName());
         contentValues.put("day", meal.getDay());
         contentValues.put("hour", meal.getHour());
+
         db.insertOrThrow("Meals", null, contentValues);
     }
 
     public void deleteMeal(int id){
         SQLiteDatabase db = getWritableDatabase();
         String[] arguments={""+id};
-        db.delete("Meals", "nr=?", arguments);
+        db.delete("Meals", "id=?", arguments);
     }
 
     public List<Meal> giveAll(){
         List<Meal> meals = new LinkedList<Meal>();
-        String[] columns={"nr","name","day","hour"};
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor =db.query("Meals",columns,null,null,null,null,null);
+        Cursor cursor = createCursorWithReadableDatabaseAndNoParameters();
         while(cursor.moveToNext()){
-            Meal meal= new Meal();
-            meal.setNr(cursor.getInt(0));
+            Meal meal = new Meal();
+            meal.setId(cursor.getInt(0));
             meal.setMealName(cursor.getString(1));
             meal.setDay(cursor.getString(2));
             meal.setHour(cursor.getString(3));
@@ -67,13 +67,18 @@ public class MealsBaseManager extends SQLiteOpenHelper {
     }
 
     public int getLastId(){
-        String[] columns={"nr","name","day","hour"};
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor =db.query("Meals",columns,null,null,null,null,null);
+        Cursor cursor = createCursorWithReadableDatabaseAndNoParameters();
         int id = 0;
         while(cursor.moveToNext()){
             id = cursor.getInt(0);
         }
         return id;
+    }
+
+    private Cursor createCursorWithReadableDatabaseAndNoParameters(){
+        String[] columns = {"id","name","day","hour"};
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query("Meals",columns,null,null,null,null,null);
+        return cursor;
     }
 }

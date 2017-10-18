@@ -4,14 +4,11 @@ package com.example.rxrt8.dietanabol;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -48,7 +45,6 @@ public class ProductsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         fillTheActivity();
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -75,40 +71,15 @@ public class ProductsActivity extends AppCompatActivity {
         saveAndDelete.setEnabled(FALSE);
 
 
-        saveAndDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<Integer> keysToDelete = new ArrayList<Integer>();
-                int prodID = 0;
-                for(FoodProduct f : productsBaseManager.giveByName(productToDelete.getSelectedItem().toString())){
-                    prodID = f.getNr();
-                    productsBaseManager.deleteFoodProduct(f.getNr());
-                    break;
-                }
-                if(prodID!=0) {
-                    for (ProdMeal k : prodMealBaseManager.giveByProdID(prodID)) {
-                        for(ProdMeal m: prodMealBaseManager.giveByMealID(k.getMealId())){
-                            keysToDelete.add(m.getId());
-                        }
-                        Log.d("dane usuwam posilek ",String.valueOf(k.getMealId()));
-                        mealsBaseManager.deleteMeal(k.getMealId());
-                    }
-                    for(Integer k:keysToDelete){
-                        Log.d("dane usuwam klucz ",String.valueOf(k));
-                        prodMealBaseManager.deleteKey(k);
-                    }
-                }
-
-                Intent intent = new Intent(ProductsActivity.this, ProductsActivity.class);
-                startActivity(intent);
+        fillTextViews();
 
 
+    }
 
-            }
-        });
 
+    void fillTextViews(){
         for(FoodProduct k:productsBaseManager.giveAll()){
-            productsID.setText(productsID.getText()+"\n"+ k.getNr());
+            productsID.setText(productsID.getText()+"\n"+ k.getId());
             productsName.setText(productsName.getText()+"\n"+k.getProductName());
             if(k.isGramsOrPieces())
                 productsGramsOrPieces.setText(productsGramsOrPieces.getText()+"\n"+getResources().getString(R.string.pieces));
@@ -120,8 +91,6 @@ public class ProductsActivity extends AppCompatActivity {
                 productsIsRegularlyPurchased.setText(productsIsRegularlyPurchased.getText()+"\n"+getResources().getString(R.string.no));
             productsQuantity.setText(productsQuantity.getText()+"\n"+k.getQuantity());
         }
-
-
     }
 
     private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
@@ -140,13 +109,41 @@ public class ProductsActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.deleteProductBtn:
-                deleteProduct();
+                deleteProductView();
                 break;
             case R.id.cancelProductDeletionBtn:
                 cancelProductDeletion();
                 break;
+            case R.id.saveAndDeleteProductBtn:
+                deleteProductAndMealsWhichHaveThisProduct();
 
         }
+    }
+
+    private void deleteProductAndMealsWhichHaveThisProduct() {
+        ArrayList<Integer> keysToDelete = new ArrayList<Integer>();
+        int prodID = 0;
+        for(FoodProduct f : productsBaseManager.giveByName(productToDelete.getSelectedItem().toString())){
+            prodID = f.getId();
+            productsBaseManager.deleteFoodProduct(f.getId());
+            break;
+        }
+        if(prodID!=0) {
+            for (ProdMeal k : prodMealBaseManager.giveByProdID(prodID)) {
+                for(ProdMeal m: prodMealBaseManager.giveByMealID(k.getMealId())){
+                    keysToDelete.add(m.getId());
+                }
+                Log.d("Log ","Deleted meal " + String.valueOf(k.getMealId()));
+                mealsBaseManager.deleteMeal(k.getMealId());
+            }
+            for(Integer k:keysToDelete){
+                Log.d("Log ","Deleted product " + String.valueOf(k));
+                prodMealBaseManager.deleteKey(k);
+            }
+        }
+
+        Intent intent = new Intent(ProductsActivity.this, ProductsActivity.class);
+        startActivity(intent);
     }
 
     private void cancelProductDeletion() {
@@ -167,7 +164,7 @@ public class ProductsActivity extends AppCompatActivity {
         saveAndDelete.setEnabled(FALSE);
     }
 
-    private void deleteProduct() {
+    private void deleteProductView() {
         showMessageOKCancel(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -198,7 +195,6 @@ public class ProductsActivity extends AppCompatActivity {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, productsNameArrayList);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         productToDelete.setAdapter(spinnerArrayAdapter);
-
 
     }
 
