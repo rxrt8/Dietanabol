@@ -49,19 +49,67 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/dietSpinner"
         android:layout_marginTop="15dp"
+        android:onClick="click"
         android:text="@string/delete_meal" />
+
+    <TextView
+        android:id="@+id/mealToDeleteTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/deleteMealBtn"
+        android:layout_marginTop="15dp"
+        android:text="@string/meal_to_delete" />
+
+    <Spinner
+        android:id="@+id/mealToDeleteSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mealToDeleteTV"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/deletedMealPreviewTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mealToDeleteSpinner"
+        android:layout_marginTop="15dp"/>
+
+    <Button
+        android:id="@+id/saveAndDeleteMealBtn"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/deletedMealPreviewTV"
+        android:layout_alignParentStart="true"
+        android:onClick="click"
+        android:text="@string/delete_and_save" />
+
+    <Button
+        android:id="@+id/cancelMealDeletionBtn"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:onClick="click"
+        android:layout_alignBaseline="@+id/saveAndDeleteMealBtn"
+        android:layout_alignBottom="@+id/saveAndDeleteMealBtn"
+        android:layout_alignParentEnd="true" />
+
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/addMealBtn"
-        android:layout_marginTop="15dp">
+        android:layout_below="@+id/mealToDeleteSpinner">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/dayDietTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+             />
     </ScrollView>
 
 

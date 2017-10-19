@@ -52,12 +52,19 @@
     <string name="ingredient">Składnik:</string>
     <string name="add_next_ingredient">Dodaj kolejny składnik</string>
     <string name="preview">Podgląd:</string>
-    <string name="lack_of_meal">Wprowadź posiłek przed zapisaniem.</string>
+    <string name="lack_of_meal">Wprowadź poprawnie posiłek przed zapisaniem.</string>
     <string name="lack_of_quantity_and_hour">Uzupełnij aktualny posiłek przed dodaniem kolejnego.</string>
     <string name="product_to_delete">Który produkt chcesz usunąć?</string>
     <string name="cancel">Anuluj</string>
-    <string name="exit_without_deleting">Czy na pewno chcesz usunąć produkt? Wiąże się to z usunięciem wszystkich posiłków zawierających usunięty produkt.</string>
+    <string name="exit_without_deleting_product">Czy na pewno chcesz usunąć produkt? Wiąże się to z usunięciem wszystkich posiłków zawierających usunięty produkt.</string>
     <string name="delete_and_save">Usuń i zapisz</string>
+    <string name="quantity_greater_than_zero">Wprowadź liczbę większą od zera.</string>
+    <string name="exit_because_there_is_no_product">Nie posiadasz żadnych produktów. Wprowadź nowy produkt w zakładce PRODUKTY przed utworzeniem nowego posiłku.</string>
+    <string name="OK">OK</string>
+    <string name="click_to_input_an_hour">Kliknij przycisk poniżej by wprowadzić godzinę.</string>
+    <string name="select_time">Wybierz godzinę</string>
+    <string name="set_an_hour">Wybierz godzinę</string>
+    <string name="meal_to_delete">Który posiłek chcesz usunąć?</string>
 
     <string-array name="types_of_meal">
         <item>Śniadanie</item>

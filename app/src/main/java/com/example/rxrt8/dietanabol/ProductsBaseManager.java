@@ -84,6 +84,7 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
             foodProduct.setQuantity(cursor.getInt(4));
             foodProducts.add(foodProduct);
         }
+        cursor.close();
         return foodProducts;
     }
 
@@ -105,6 +106,7 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
             foodProduct.setRegularlyPurchased(!cursor.isNull(3));
             foodProduct.setQuantity(cursor.getInt(4));
         }
+        cursor.close();
         return foodProduct;
     }
 
@@ -123,12 +125,25 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
             foodProduct.setQuantity(cursor.getInt(4));
             foodProducts.add(foodProduct);
         }
+        cursor.close();
         return foodProducts;
     }
 
     private String[] getColumns(){
         String[] columns = {"id","name","gramsOrPieces","isRegularlyPurchased","quantity"};
         return columns;
+    }
+
+    public int getLastId(){
+        String[] columns = getColumns();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query("Products",columns,null,null,null,null,null);
+        int id = 0;
+        while(cursor.moveToNext()){
+            id = cursor.getInt(0);
+        }
+        cursor.close();
+        return id;
     }
 
 }

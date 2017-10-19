@@ -62,6 +62,7 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
             prodMeal.setQuantity(cursor.getInt(3));
             keys.add(prodMeal);
         }
+        cursor.close();
         return keys;
     }
 
@@ -82,6 +83,7 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
             FoodProduct foodProduct = productsBaseManager.giveFoodProduct(prodMeal.getProdId());
             productsBaseManager.changeTheAmountOfFood(foodProduct, -prodMeal.getQuantity());
         }
+        cursor.close();
     }
 
     public void deleteKey(int id){
@@ -100,6 +102,7 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
         while(cursor.moveToNext()){
             id = cursor.getInt(0);
         }
+        cursor.close();
         return id;
     }
 
@@ -108,7 +111,7 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select id,prodID,mealID,quantity from ProdMeal where prodID='"
                 +productID+
                 "' order by id asc", null);
-        return fillProdMealsList(cursor);
+        return fillProdMealList(cursor);
     }
 
     public List<ProdMeal> giveByMealID(int mealID){
@@ -116,10 +119,10 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select id,prodID,mealID,quantity from ProdMeal where mealID='"
                 +mealID+
                 "' order by id asc", null);
-        return fillProdMealsList(cursor);
+        return fillProdMealList(cursor);
     }
 
-    private List<ProdMeal> fillProdMealsList(Cursor cursor){
+    private List<ProdMeal> fillProdMealList(Cursor cursor){
         List<ProdMeal> keys = new LinkedList<ProdMeal>();
         while(cursor.moveToNext()){
             ProdMeal prodMeal = new ProdMeal();

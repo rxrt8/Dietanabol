@@ -44,7 +44,6 @@ public class ProductsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fillTheActivity();
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -95,7 +94,7 @@ public class ProductsActivity extends AppCompatActivity {
 
     private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(ProductsActivity.this)
-                .setMessage(getResources().getString(R.string.exit_without_deleting))
+                .setMessage(getResources().getString(R.string.exit_without_deleting_product))
                 .setPositiveButton(getResources().getString(R.string.i_want_to_exit), okListener)
                 .setNegativeButton(getResources().getString(R.string.i_want_to_stay), null)
                 .create()
@@ -116,7 +115,7 @@ public class ProductsActivity extends AppCompatActivity {
                 break;
             case R.id.saveAndDeleteProductBtn:
                 deleteProductAndMealsWhichHaveThisProduct();
-
+                break;
         }
     }
 
@@ -137,7 +136,7 @@ public class ProductsActivity extends AppCompatActivity {
                 mealsBaseManager.deleteMeal(k.getMealId());
             }
             for(Integer k:keysToDelete){
-                Log.d("Log ","Deleted product " + String.valueOf(k));
+                Log.d("Log ","Deleted key " + String.valueOf(k));
                 prodMealBaseManager.deleteKey(k);
             }
         }

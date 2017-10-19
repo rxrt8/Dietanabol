@@ -53,8 +53,29 @@ public class MealsBaseManager extends SQLiteOpenHelper {
     }
 
     public List<Meal> giveAll(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("select id,name,day,hour from Meals order by hour asc", null);
+        return fillMealsList(cursor);
+    }
+
+    public List<Meal> giveByDay(String day){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("select id,name,day,hour from Meals where day='"
+                +day+
+                "' order by hour asc", null);
+        return fillMealsList(cursor);
+    }
+
+    public List<Meal> giveByHour(String hour){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("select id,name,day,hour from Meals where hour='"
+                +hour+
+                "' order by hour asc", null);
+        return fillMealsList(cursor);
+    }
+
+    private List<Meal> fillMealsList(Cursor cursor){
         List<Meal> meals = new LinkedList<Meal>();
-        Cursor cursor = createCursorWithReadableDatabaseAndNoParameters();
         while(cursor.moveToNext()){
             Meal meal = new Meal();
             meal.setId(cursor.getInt(0));
@@ -63,8 +84,10 @@ public class MealsBaseManager extends SQLiteOpenHelper {
             meal.setHour(cursor.getString(3));
             meals.add(meal);
         }
+        cursor.close();
         return meals;
     }
+
 
     public int getLastId(){
         Cursor cursor = createCursorWithReadableDatabaseAndNoParameters();
@@ -78,7 +101,6 @@ public class MealsBaseManager extends SQLiteOpenHelper {
     private Cursor createCursorWithReadableDatabaseAndNoParameters(){
         String[] columns = {"id","name","day","hour"};
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Meals",columns,null,null,null,null,null);
-        return cursor;
+        return db.query("Meals",columns,null,null,null,null,null);
     }
 }
