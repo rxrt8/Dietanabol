@@ -68,6 +68,8 @@ public class ProductsActivity extends AppCompatActivity {
         productToDelete.setEnabled(FALSE);
         cancel.setEnabled(FALSE);
         saveAndDelete.setEnabled(FALSE);
+        if(productsBaseManager.getLastId()==0)
+            deleteProduct.setEnabled(FALSE);
 
 
         fillTextViews();

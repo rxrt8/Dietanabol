@@ -1,9 +1,8 @@
 package com.example.rxrt8.dietanabol;
 
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -72,6 +71,17 @@ public class DietActivity extends AppCompatActivity {
         cancel.setEnabled(FALSE);
         saveAndDelete.setEnabled(FALSE);
 
+        Boolean anyMealsToDelete = FALSE;
+        for(Meal m:mealsBaseManager.giveByDay(day.getSelectedItem().toString())){
+            anyMealsToDelete = TRUE;
+        }
+        if(anyMealsToDelete){
+            deleteMeal.setEnabled(TRUE);
+        }
+        else{
+            deleteMeal.setEnabled(FALSE);
+        }
+
 
         setCurrentDay();
         daySpinnerListener();
@@ -83,6 +93,17 @@ public class DietActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 fillTextViews();
+
+                Boolean anyMealsToDelete = FALSE;
+                for(Meal m:mealsBaseManager.giveByDay(day.getSelectedItem().toString())){
+                    anyMealsToDelete = TRUE;
+                }
+                if(anyMealsToDelete){
+                    deleteMeal.setEnabled(TRUE);
+                }
+                else{
+                    deleteMeal.setEnabled(FALSE);
+                }
             }
 
             @Override

@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rxrt8.dietanabol">
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,15 +17,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".ShoppingActivity"
-            android:label="@string/title_activity_shopping"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.rxrt8.dietanabol.MainActivity" />
         </activity>
         <activity
             android:name=".DietActivity"
@@ -63,6 +53,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.rxrt8.dietanabol.DietActivity" />
+        </activity>
+        <activity
+            android:name=".ShoppingActivity"
+            android:label="@string/title_activity_shopping"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rxrt8.dietanabol.MainActivity" />
         </activity>
     </application>
 

@@ -65,6 +65,8 @@
     <string name="select_time">Wybierz godzinę</string>
     <string name="set_an_hour">Wybierz godzinę</string>
     <string name="meal_to_delete">Który posiłek chcesz usunąć?</string>
+    <string name="go_shopping">Zrób zakupy</string>
+    <string name="end_shopping">Zakończ zakupy</string>
 
     <string-array name="types_of_meal">
         <item>Śniadanie</item>
