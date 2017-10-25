@@ -63,7 +63,7 @@ public class AddMealActivity extends AppCompatActivity {
         fillTheActivity();
         floatingActionButtonListener();
         databaseLogs();
-        checkIfThereIsAnyProducts();
+        checkIfThereAreAnyProducts();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -164,7 +164,6 @@ public class AddMealActivity extends AppCompatActivity {
                 productsBaseManager.changeTheAmountOfFood(f, prodMeal.getQuantity());
                 prodMealBaseManager.addKey(prodMeal);
                 prodMealKeys.add(prodMealBaseManager.getLastId());
-                break;
             }
             quantity.setText("");
             fillPreview();
@@ -212,17 +211,15 @@ public class AddMealActivity extends AppCompatActivity {
 
 
 
-    private void checkIfThereIsAnyProducts() {
+    private void checkIfThereAreAnyProducts() {
         if (productsBaseManager.getLastId()==0){
-            showMessageBecauseThereIsNoProduct(new DialogInterface.OnClickListener() {
+            showMessageBecauseThereAreNoProducts(new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent(AddMealActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
             });
-
-
         }
     }
 
@@ -277,7 +274,7 @@ public class AddMealActivity extends AppCompatActivity {
     }
 
 
-    private void showMessageBecauseThereIsNoProduct(DialogInterface.OnClickListener okListener) {
+    private void showMessageBecauseThereAreNoProducts(DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(AddMealActivity.this)
                 .setMessage(getResources().getString(R.string.exit_because_there_is_no_product))
                 .setPositiveButton(getResources().getString(R.string.OK), okListener)

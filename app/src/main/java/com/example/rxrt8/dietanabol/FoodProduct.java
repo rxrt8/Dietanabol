@@ -12,6 +12,7 @@ public class FoodProduct {
     private boolean gramsOrPieces;
     private boolean regularlyPurchased;
     private int quantity;
+    private int timesWhenProductWasNotPurchased;
 
 
     public int getId() {
@@ -54,4 +55,12 @@ public class FoodProduct {
         this.quantity = quantity;
     }
 
+
+    public int getTimesWhenProductWasNotPurchased() {
+        return timesWhenProductWasNotPurchased;
+    }
+
+    public void setTimesWhenProductWasNotPurchased(int timesWhenProductWasNotPurchased) {
+        this.timesWhenProductWasNotPurchased = timesWhenProductWasNotPurchased;
+    }
 }

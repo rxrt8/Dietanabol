@@ -80,7 +80,7 @@ public class ProductsActivity extends AppCompatActivity {
 
     void fillTextViews(){
         for(FoodProduct k:productsBaseManager.giveAll()){
-            productsID.setText(productsID.getText()+"\n"+ k.getId());
+            productsID.setText(productsID.getText()+"\n"+ k.getTimesWhenProductWasNotPurchased());
             productsName.setText(productsName.getText()+"\n"+k.getProductName());
             if(k.isGramsOrPieces())
                 productsGramsOrPieces.setText(productsGramsOrPieces.getText()+"\n"+getResources().getString(R.string.pieces));

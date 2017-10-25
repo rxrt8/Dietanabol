@@ -29,7 +29,8 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
                         "name text," +
                         "gramsOrPieces boolean," +
                         "isRegularlyPurchased boolean," +
-                        "quantity integer);" +
+                        "quantity integer," +
+                        "timesWhenProductWasNotPurchased integer);" +
                         "");
     }
 
@@ -48,7 +49,7 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
         if(foodProduct.isRegularlyPurchased())
             contentValues.put("isRegularlyPurchased", foodProduct.isRegularlyPurchased());
         contentValues.put("quantity", foodProduct.getQuantity());
-
+        contentValues.put("timesWhenProductWasNotPurchased", foodProduct.getTimesWhenProductWasNotPurchased());
         db.insertOrThrow("Products", null, contentValues);
     }
 
@@ -69,6 +70,16 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
         db.update("Products", contentValues,"id=?",args);
     }
 
+    public void updateTimesWhenProductWasNotPurchased(FoodProduct foodProduct, int timesWhenProductWasNotPurchased){
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("timesWhenProductWasNotPurchased", timesWhenProductWasNotPurchased);
+
+        String args[]={foodProduct.getId()+""};
+        db.update("Products", contentValues,"id=?",args);
+    }
+
 
     public List<FoodProduct> giveAll(){
         List<FoodProduct> foodProducts = new LinkedList<FoodProduct>();
@@ -82,6 +93,7 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
             foodProduct.setGramsOrPieces(!cursor.isNull(2));
             foodProduct.setRegularlyPurchased(!cursor.isNull(3));
             foodProduct.setQuantity(cursor.getInt(4));
+            foodProduct.setTimesWhenProductWasNotPurchased(cursor.getInt(5));
             foodProducts.add(foodProduct);
         }
         cursor.close();
@@ -105,6 +117,7 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
             foodProduct.setGramsOrPieces(!cursor.isNull(2));
             foodProduct.setRegularlyPurchased(!cursor.isNull(3));
             foodProduct.setQuantity(cursor.getInt(4));
+            foodProduct.setTimesWhenProductWasNotPurchased(cursor.getInt(5));
         }
         cursor.close();
         return foodProduct;
@@ -113,7 +126,7 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
     public List<FoodProduct> giveByName(String productName){
         List<FoodProduct> foodProducts = new LinkedList<FoodProduct>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor =db.rawQuery("select id,name,gramsOrPieces,isRegularlyPurchased,quantity from Products where name='"
+        Cursor cursor =db.rawQuery("select id,name,gramsOrPieces,isRegularlyPurchased,quantity,timesWhenProductWasNotPurchased from Products where name='"
                 +productName+
                 "' order by id asc", null);
         while(cursor.moveToNext()){
@@ -123,6 +136,7 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
             foodProduct.setGramsOrPieces(!cursor.isNull(2));
             foodProduct.setRegularlyPurchased(!cursor.isNull(3));
             foodProduct.setQuantity(cursor.getInt(4));
+            foodProduct.setTimesWhenProductWasNotPurchased(cursor.getInt(5));
             foodProducts.add(foodProduct);
         }
         cursor.close();
@@ -130,7 +144,7 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
     }
 
     private String[] getColumns(){
-        String[] columns = {"id","name","gramsOrPieces","isRegularlyPurchased","quantity"};
+        String[] columns = {"id","name","gramsOrPieces","isRegularlyPurchased","quantity","timesWhenProductWasNotPurchased"};
         return columns;
     }
 

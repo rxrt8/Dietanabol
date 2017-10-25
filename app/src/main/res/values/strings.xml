@@ -65,8 +65,10 @@
     <string name="select_time">Wybierz godzinę</string>
     <string name="set_an_hour">Wybierz godzinę</string>
     <string name="meal_to_delete">Który posiłek chcesz usunąć?</string>
-    <string name="go_shopping">Zrób zakupy</string>
     <string name="end_shopping">Zakończ zakupy</string>
+    <string name="go_for_new_shopping">Nowe zakupy</string>
+    <string name="go_finish_the_last_shopping">Dokończ ostatnie zakupy</string>
+    <string name="exit_because_there_is_no_product_which_is_regularly_purchased">Nie posiadasz żadnych produktów, które są regularnie kupowane i używane w diecie. Wprowadź nowy produkt w zakładce PRODUKTY przed zrobieniem zakupów. Jeśli masz taki produkt, stwórz z niego nowy posiłek w zakładce DIETA.</string>
 
     <string-array name="types_of_meal">
         <item>Śniadanie</item>
