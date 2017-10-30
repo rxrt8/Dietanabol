@@ -12,25 +12,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:showIn="@layout/activity_add_product">
 
-
-    <TextView
-        android:id="@+id/productNameTV"
+    <EditText
+        android:id="@+id/productNameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/product_name"
-        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:inputType="textPersonName"
         android:layout_alignParentStart="true"
-        android:textColor="@color/colorPrimaryText"/>
+        android:textColor="@color/colorPrimaryText"
+        android:hint="@string/product_name" />
+
 
     <Switch
         android:id="@+id/gramsOrPiecesSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/productNameTV"
-        android:layout_marginTop="15dp"
+        android:layout_below="@+id/productNameET"
+        android:layout_marginTop="@dimen/margin_bigger"
         android:text="@string/grams_or_pieces"
-        android:textColor="@color/colorPrimaryText"/>
+        android:textColor="@color/colorSecondaryText"/>
 
     <Switch
         android:id="@+id/isRegularlyPurchasedSwitch"
@@ -38,20 +39,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/gramsOrPiecesSwitch"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/margin_bigger"
         android:text="@string/is_regularly_purchased"
-        android:textColor="@color/colorPrimaryText"/>
+        android:textColor="@color/colorSecondaryText"/>
 
-    <EditText
-        android:id="@+id/productNameET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_marginStart="13dp"
-        android:layout_alignBaseline="@+id/productNameTV"
-        android:layout_alignBottom="@+id/productNameTV"
-        android:layout_toEndOf="@+id/productNameTV" />
+
 
 
 </RelativeLayout>

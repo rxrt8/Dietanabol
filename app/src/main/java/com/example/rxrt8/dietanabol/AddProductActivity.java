@@ -44,6 +44,14 @@ public class AddProductActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                FoodProduct p = productsBaseManager.giveByName(productName.getText().toString());
+
+                if(p.getId()!=-1){
+                    productName.setText("");
+                    Snackbar.make(view, getResources().getString(R.string.product_name_is_not_unique), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    }
                 if(productName.getText().length()!=0) {
                     FoodProduct foodProduct = new FoodProduct();
                     foodProduct.setProductName(productName.getText().toString());
@@ -53,7 +61,7 @@ public class AddProductActivity extends AppCompatActivity {
                     Intent intent = new Intent(AddProductActivity.this, ProductsActivity.class);
                     startActivity(intent);
                 }
-                else{
+                else if(p.getId()==-1){
                     Snackbar.make(view, getResources().getString(R.string.lack_of_product), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }

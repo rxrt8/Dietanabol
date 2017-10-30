@@ -34,7 +34,7 @@ public class ShoppingActivity extends AppCompatActivity {
     private List<String> productsToBuy = new ArrayList<>();
     private List<String> productsName = new ArrayList<>();
     private final ProductsBaseManager productsBaseManager = new ProductsBaseManager(this);
-    private final ArrayList<Integer> coloredItems = new ArrayList<Integer>(100);
+    private final ArrayList<Integer> coloredItems = new ArrayList<Integer>();
 
 
     @Override
@@ -216,10 +216,9 @@ public class ShoppingActivity extends AppCompatActivity {
                 for(int i=0; i<sizeOfProductsList; i++){
                     if (coloredItems.contains(i)) {
                         coloredItems.remove(coloredItems.indexOf(i));
-                        for(FoodProduct f:productsBaseManager.giveByName(productsName.get(i))){
-                            productsBaseManager.updateTimesWhenProductWasNotPurchased(f, 0);
+                        FoodProduct f = productsBaseManager.giveByName(productsName.get(i));
+                        productsBaseManager.updateTimesWhenProductWasNotPurchased(f, 0);
                         }
-                    }
                 }
                 Intent intent = new Intent(ShoppingActivity.this, MainActivity.class);
                 startActivity(intent);

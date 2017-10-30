@@ -123,25 +123,25 @@ public class ProductsBaseManager extends SQLiteOpenHelper{
         return foodProduct;
     }
 
-    public List<FoodProduct> giveByName(String productName){
-        List<FoodProduct> foodProducts = new LinkedList<FoodProduct>();
+    public FoodProduct giveByName(String productName){
+        FoodProduct foodProduct = new FoodProduct();
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor =db.rawQuery("select id,name,gramsOrPieces,isRegularlyPurchased,quantity,timesWhenProductWasNotPurchased from Products where name='"
                 +productName+
                 "' order by id asc", null);
+        foodProduct.setId(-1);
         while(cursor.moveToNext()){
-            FoodProduct foodProduct = new FoodProduct();
             foodProduct.setId(cursor.getInt(0));
             foodProduct.setProductName(cursor.getString(1));
             foodProduct.setGramsOrPieces(!cursor.isNull(2));
             foodProduct.setRegularlyPurchased(!cursor.isNull(3));
             foodProduct.setQuantity(cursor.getInt(4));
             foodProduct.setTimesWhenProductWasNotPurchased(cursor.getInt(5));
-            foodProducts.add(foodProduct);
         }
         cursor.close();
-        return foodProducts;
+        return foodProduct;
     }
+
 
     private String[] getColumns(){
         String[] columns = {"id","name","gramsOrPieces","isRegularlyPurchased","quantity","timesWhenProductWasNotPurchased"};

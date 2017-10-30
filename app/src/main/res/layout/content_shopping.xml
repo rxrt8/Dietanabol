@@ -14,24 +14,25 @@
 
     <Button
         android:id="@+id/goForNewShoppingBtn"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryText"
         android:layout_alignParentStart="true"
-        android:onClick="goForNewShoppingOnClickListener"
         android:text="@string/go_for_new_shopping" />
 
 
     <Button
         android:id="@+id/goFinishTheLastShoppingBtn"
-
-        android:layout_width="160dp"
+        android:textColor="@color/colorPrimaryText"
+        android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:text="@string/go_finish_the_last_shopping" />
 
     <Button
         android:id="@+id/endShoppingBtn"
-        android:layout_width="160dp"
+        android:layout_width="@dimen/button_width"
+        android:textColor="@color/colorPrimaryText"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:text="@string/end_shopping"
@@ -40,7 +41,8 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/margin_bigger"
+        android:textColor="@color/colorPrimaryText"
         android:layout_below="@+id/endShoppingBtn"
         android:id="@+id/productsLV" />
 

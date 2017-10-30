@@ -95,6 +95,7 @@ public class MealsBaseManager extends SQLiteOpenHelper {
         while(cursor.moveToNext()){
             id = cursor.getInt(0);
         }
+        cursor.close();
         return id;
     }
 

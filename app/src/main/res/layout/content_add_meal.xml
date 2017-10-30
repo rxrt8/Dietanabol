@@ -22,20 +22,23 @@
                 android:id="@+id/dayOfTheWeekTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/day_of_the_week" />
+                android:text="@string/day_of_the_week"
+                android:textColor="@color/colorSecondaryText"/>
 
             <Spinner
                 android:id="@+id/dayOfTheWeekSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:entries="@array/days" />
+                android:layout_marginTop="@dimen/margin_smaller"
+                android:entries="@array/days"
+                android:textColor="@color/colorPrimaryText"/>
 
             <TextView
                 android:id="@+id/hourTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/margin_bigger"
+                android:textColor="@color/colorSecondaryText"
                 android:text="@string/hour" />
 
 
@@ -43,8 +46,9 @@
                 android:id="@+id/hourHintTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_smaller"
                 android:ems="10"
+                android:textColor="@color/colorSecondaryText"
                 android:hint="@string/click_to_input_an_hour"
                 />
 
@@ -53,7 +57,7 @@
                 android:id="@+id/hourButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_smaller"
                 android:onClick="setAnHour"
                 android:text="@string/set_an_hour" />
 
@@ -61,44 +65,47 @@
                 android:id="@+id/typeOfMealTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/margin_bigger"
+                android:textColor="@color/colorSecondaryText"
                 android:text="@string/type_of_meal" />
 
             <Spinner
                 android:id="@+id/typeOfMealSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_smaller"
+                android:textColor="@color/colorPrimaryText"
                 android:entries="@array/types_of_meal" />
 
             <TextView
                 android:id="@+id/ingredientTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/margin_bigger"
+                android:textColor="@color/colorSecondaryText"
                 android:text="@string/ingredient" />
 
             <Spinner
                 android:id="@+id/ingredientSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:textColor="@color/colorPrimaryText"
+                android:layout_marginTop="@dimen/margin_smaller" />
 
             <Switch
                 android:id="@+id/gramsOrPiecesSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/margin_bigger"
                 android:text="@string/grams_or_pieces"
-                android:textColor="@color/colorPrimaryText" />
+                android:textColor="@color/colorSecondaryText" />
 
             <TextView
                 android:id="@+id/quantityTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/margin_bigger"
+                android:textColor="@color/colorSecondaryText"
                 android:text="@string/product_quantity" />
 
             <EditText
@@ -107,13 +114,15 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/quantity_greater_than_zero"
+                android:textColor="@color/colorPrimaryText"
                 android:inputType="numberSigned" />
 
             <Button
                 android:id="@+id/addNextIngredientBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/margin_bigger"
+                android:textColor="@color/colorPrimaryText"
                 android:onClick = "addNextIngredient"
                 android:text="@string/add_next_ingredient" />
 
@@ -121,7 +130,8 @@
                 android:id="@+id/previewTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp" />
+                android:textColor="@color/colorSecondaryText"
+                android:layout_marginTop="@dimen/margin_bigger" />
         </LinearLayout>
 
 

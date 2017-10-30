@@ -47,6 +47,7 @@ public class AddMealActivity extends AppCompatActivity {
     private Switch gramsOrPieces;
     private Button hourButton;
     private boolean createdMeal = FALSE;
+    private boolean hourIsCorrect = TRUE;
     private final MealsBaseManager mealsBaseManager = new MealsBaseManager(this);
     private final ProdMealBaseManager prodMealBaseManager = new ProdMealBaseManager(this);
     private final ProductsBaseManager productsBaseManager = new ProductsBaseManager(this);
@@ -59,6 +60,7 @@ public class AddMealActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_meal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         fillTheActivity();
         floatingActionButtonListener();
@@ -99,10 +101,9 @@ public class AddMealActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 boolean isGramsOrPieces = FALSE;
-                for(FoodProduct f:productsBaseManager.giveByName(ingredient.getSelectedItem().toString())){
+                FoodProduct f = productsBaseManager.giveByName(ingredient.getSelectedItem().toString());
                     isGramsOrPieces = f.isGramsOrPieces();
-                    break;
-                }
+
                 gramsOrPieces.setChecked(isGramsOrPieces);
             }
 
@@ -118,6 +119,14 @@ public class AddMealActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!createdMeal)
+                    for(Meal m:mealsBaseManager.giveByHour(hourTV.getText().toString()))
+                        if (m.getDay().equals(dayOfTheWeek.getSelectedItem().toString())) {
+                            hourTV.setText("");
+                            Snackbar.make(view, getResources().getString(R.string.meal_hour_is_not_unique), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            hourIsCorrect = FALSE;
+                        }
                 if(numberOfIngredients!=0 || hourTV.getText().length()!=0&&quantity.getText().length()!=0&&Integer.parseInt(quantity.getText().toString())>0) {
                     if(!createdMeal) {
                         Meal meal = new Meal();
@@ -131,7 +140,7 @@ public class AddMealActivity extends AppCompatActivity {
                     Intent intent = new Intent(AddMealActivity.this, DietActivity.class);
                     startActivity(intent);
                 }
-                else{
+                else if(hourIsCorrect){
                     Snackbar.make(view, getResources().getString(R.string.lack_of_meal), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
@@ -143,7 +152,15 @@ public class AddMealActivity extends AppCompatActivity {
 
 
     public void addNextIngredient(View view){
-        if(numberOfIngredients==0 && !createdMeal && Integer.parseInt(quantity.getText().toString())>0){
+        if(!createdMeal)
+            for(Meal m:mealsBaseManager.giveByHour(hourTV.getText().toString()))
+                if (m.getDay().equals(dayOfTheWeek.getSelectedItem().toString())) {
+                    hourTV.setText("");
+                    Snackbar.make(view, getResources().getString(R.string.meal_hour_is_not_unique), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    hourIsCorrect = FALSE;
+                }
+        if(numberOfIngredients==0 && !createdMeal && Integer.parseInt(quantity.getText().toString())>0 && hourTV.getText().length()!=0 && hourIsCorrect){
             Meal meal = new Meal();
             meal.setMealName(typeOfMeal.getSelectedItem().toString());
             meal.setDay(dayOfTheWeek.getSelectedItem().toString());
@@ -156,7 +173,8 @@ public class AddMealActivity extends AppCompatActivity {
             typeOfMeal.setEnabled(FALSE);
             hourButton.setEnabled(FALSE);
             numberOfIngredients++;
-            for(FoodProduct f:productsBaseManager.giveByName(ingredient.getSelectedItem().toString())){
+
+            FoodProduct f = productsBaseManager.giveByName(ingredient.getSelectedItem().toString());
                 ProdMeal prodMeal = new ProdMeal();
                 prodMeal.setMealId(mealsBaseManager.getLastId());
                 prodMeal.setProdId(f.getId());
@@ -164,11 +182,11 @@ public class AddMealActivity extends AppCompatActivity {
                 productsBaseManager.changeTheAmountOfFood(f, prodMeal.getQuantity());
                 prodMealBaseManager.addKey(prodMeal);
                 prodMealKeys.add(prodMealBaseManager.getLastId());
-            }
+
             quantity.setText("");
             fillPreview();
         }
-        else {
+        else if(hourIsCorrect){
             Snackbar.make(view, getResources().getString(R.string.lack_of_quantity_and_hour), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
@@ -205,8 +223,10 @@ public class AddMealActivity extends AppCompatActivity {
                     hourTV.setText( selectedHour + ":" + selectedMinute);
             }
         }, hour, minute, true);//Yes 24 hour time
+
         mTimePicker.setTitle(getResources().getString(R.string.select_time));
         mTimePicker.show();
+
     }
 
 
@@ -260,7 +280,6 @@ public class AddMealActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-
 
     }
 

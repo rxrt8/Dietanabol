@@ -124,11 +124,10 @@ public class ProductsActivity extends AppCompatActivity {
     private void deleteProductAndMealsWhichHaveThisProduct() {
         ArrayList<Integer> keysToDelete = new ArrayList<Integer>();
         int prodID = 0;
-        for(FoodProduct f : productsBaseManager.giveByName(productToDelete.getSelectedItem().toString())){
+        FoodProduct f = productsBaseManager.giveByName(productToDelete.getSelectedItem().toString());
             prodID = f.getId();
             productsBaseManager.deleteFoodProduct(f.getId());
-            break;
-        }
+
         if(prodID!=0) {
             for (ProdMeal k : prodMealBaseManager.giveByProdID(prodID)) {
                 for(ProdMeal m: prodMealBaseManager.giveByMealID(k.getMealId())){
