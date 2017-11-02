@@ -2,19 +2,24 @@ package com.example.rxrt8.dietanabol;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -22,14 +27,14 @@ import static java.lang.Boolean.TRUE;
 public class DietActivity extends AppCompatActivity {
 
     private Spinner day;
-    private TextView dayDiet;
-    private TextView mealToDeleteTV;
-    private TextView deletedMealPreview;
-    private Spinner mealToDelete;
     private Button addMeal;
     private Button deleteMeal;
-    private Button cancel;
-    private Button saveAndDelete;
+    private ListView mealsListView;
+    private List<String> mealsArrayList = new ArrayList<>();
+    private List<Integer> mealsId = new ArrayList<>();
+    private int sizeOfMealsList = 0;
+    private int numberOfChosenNotifications = 0;
+    private final ArrayList<Integer> coloredItems = new ArrayList<Integer>();
     private final MealsBaseManager mealsBaseManager = new MealsBaseManager(this);
     private final ProdMealBaseManager prodMealBaseManager = new ProdMealBaseManager(this);
     private final ProductsBaseManager productsBaseManager = new ProductsBaseManager(this);
@@ -53,57 +58,27 @@ public class DietActivity extends AppCompatActivity {
 
     private void fillTheActivity() {
         day = (Spinner) findViewById(R.id.dietSpinner);
-        dayDiet = (TextView) findViewById(R.id.dayDietTV);
-        mealToDeleteTV = (TextView) findViewById(R.id.mealToDeleteTV);
-        mealToDelete = (Spinner) findViewById(R.id.mealToDeleteSpinner);
         addMeal = (Button) findViewById(R.id.addMealBtn);
         deleteMeal = (Button) findViewById(R.id.deleteMealBtn);
-        cancel = (Button) findViewById(R.id.cancelMealDeletionBtn);
-        saveAndDelete = (Button) findViewById(R.id.saveAndDeleteMealBtn);
-        deletedMealPreview = (TextView) findViewById(R.id.deletedMealPreviewTV);
+        mealsListView = (ListView) findViewById(R.id.mealsLV);
 
-        mealToDeleteTV.setVisibility(View.GONE);
-        mealToDelete.setVisibility(View.GONE);
-        cancel.setVisibility(View.GONE);
-        saveAndDelete.setVisibility(View.GONE);
-        deletedMealPreview.setVisibility(View.GONE);
-        mealToDelete.setEnabled(FALSE);
-        cancel.setEnabled(FALSE);
-        saveAndDelete.setEnabled(FALSE);
-
-        Boolean anyMealsToDelete = FALSE;
-        for(Meal m:mealsBaseManager.giveByDay(day.getSelectedItem().toString())){
-            anyMealsToDelete = TRUE;
-        }
-        if(anyMealsToDelete){
-            deleteMeal.setEnabled(TRUE);
-        }
-        else{
-            deleteMeal.setEnabled(FALSE);
-        }
-
+        deleteMeal.setEnabled(FALSE);
+        deleteMeal.setVisibility(View.GONE);
 
         setCurrentDay();
         daySpinnerListener();
-        fillTextViews();
+        addMealOnClickListener();
+        fillMealsListView();
+        deleteMealOnClickListener();
     }
+
+
 
     private void daySpinnerListener() {
         day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                fillTextViews();
-
-                Boolean anyMealsToDelete = FALSE;
-                for(Meal m:mealsBaseManager.giveByDay(day.getSelectedItem().toString())){
-                    anyMealsToDelete = TRUE;
-                }
-                if(anyMealsToDelete){
-                    deleteMeal.setEnabled(TRUE);
-                }
-                else{
-                    deleteMeal.setEnabled(FALSE);
-                }
+                fillMealsListView();
             }
 
             @Override
@@ -112,22 +87,6 @@ public class DietActivity extends AppCompatActivity {
             }
 
         });
-    }
-
-
-    void fillTextViews(){
-        dayDiet.setText("");
-        for(Meal m:mealsBaseManager.giveByDay(day.getSelectedItem().toString())){
-            dayDiet.setText(dayDiet.getText() + "\n" + m.getHour() + "  " + m.getMealName()+ "\n");
-            for(ProdMeal p:prodMealBaseManager.giveByMealID(m.getId())){
-                FoodProduct foodProduct = productsBaseManager.giveFoodProduct(p.getProdId());
-                if(foodProduct.isGramsOrPieces())
-                    dayDiet.setText(dayDiet.getText() + "             " + foodProduct.getProductName() + " " + p.getQuantity() + getResources().getString(R.string.pieces) + "\n");
-                else
-                    dayDiet.setText(dayDiet.getText() + "             " + foodProduct.getProductName() + " " + p.getQuantity() + getResources().getString(R.string.grams) + "\n");
-            }
-
-        }
     }
 
     private void setCurrentDay(){
@@ -157,124 +116,107 @@ public class DietActivity extends AppCompatActivity {
         }
     }
 
-    public void click(View view){
-        switch(view.getId()){
-            case R.id.addMealBtn:
+
+    private void addMealOnClickListener() {
+        addMeal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = new Intent(DietActivity.this, AddMealActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.deleteMealBtn:
-                deleteMealView();
-                break;
-            case R.id.cancelMealDeletionBtn:
-                cancelMealDeletion();
-                break;
-            case R.id.saveAndDeleteMealBtn:
-                deleteMeal();
-                break;
-        }
-    }
-
-    private void deleteMeal() {
-        int mealID = 0;
-        for(Meal m:mealsBaseManager.giveByHour(mealToDelete.getSelectedItem().toString())){
-            if(m.getDay().equals(day.getSelectedItem().toString())){
-                mealID = m.getId();
-                mealsBaseManager.deleteMeal(mealID);
-                Log.d("Log ","Deleted meal " + String.valueOf(mealID));
-                break;
             }
-        }
-        if(mealID!=0){
-            for(ProdMeal p : prodMealBaseManager.giveByMealID(mealID)){
-                Log.d("Log ","Deleted key " + String.valueOf(p.getId()));
-                prodMealBaseManager.deleteKey(p.getId());
+        });
+    }
+
+    private void fillMealsListView() {
+        mealsArrayList.removeAll(mealsArrayList);
+
+        for (Meal m : mealsBaseManager.giveByDay(day.getSelectedItem().toString())) {
+            StringBuilder tmp = new StringBuilder();
+            tmp.append(m.getHour() + "  " + m.getMealName()+ "\n");
+            for(ProdMeal p:prodMealBaseManager.giveByMealID(m.getId())){
+                FoodProduct foodProduct = productsBaseManager.giveFoodProduct(p.getProdId());
+                if(foodProduct.isGramsOrPieces())
+                    tmp.append("             " + foodProduct.getProductName() + " " + p.getQuantity() + getResources().getString(R.string.pieces) + "\n");
+                else
+                    tmp.append("             " + foodProduct.getProductName() + " " + p.getQuantity() + getResources().getString(R.string.grams) + "\n");
             }
+            String value = new String(tmp);
+            mealsArrayList.add(value);
+            sizeOfMealsList++;
+            mealsId.add(m.getId());
         }
 
-        Intent intent = new Intent(DietActivity.this, DietActivity.class);
-        startActivity(intent);
-
-    }
-
-    private void cancelMealDeletion() {
-        mealToDeleteTV.setVisibility(View.GONE);
-        mealToDelete.setVisibility(View.GONE);
-        cancel.setVisibility(View.GONE);
-        saveAndDelete.setVisibility(View.GONE);
-        deletedMealPreview.setVisibility(View.GONE);
-        mealToDelete.setEnabled(FALSE);
-        cancel.setEnabled(FALSE);
-        saveAndDelete.setEnabled(FALSE);
-
-        addMeal.setEnabled(TRUE);
-        deleteMeal.setEnabled(TRUE);
-        day.setEnabled(TRUE);
-        dayDiet.setEnabled(TRUE);
-        dayDiet.setVisibility(View.VISIBLE);
+        listViewSetAdapter();
+        listViewOnItemClickListener();
     }
 
 
-
-    private void deleteMealView() {
-        mealToDeleteTV.setVisibility(View.VISIBLE);
-        mealToDelete.setVisibility(View.VISIBLE);
-        cancel.setVisibility(View.VISIBLE);
-        saveAndDelete.setVisibility(View.VISIBLE);
-        deletedMealPreview.setVisibility(View.VISIBLE);
-        mealToDelete.setEnabled(TRUE);
-        cancel.setEnabled(TRUE);
-        saveAndDelete.setEnabled(TRUE);
-
-        addMeal.setEnabled(FALSE);
-        deleteMeal.setEnabled(FALSE);
-        day.setEnabled(FALSE);
-        dayDiet.setEnabled(FALSE);
-        dayDiet.setVisibility(View.GONE);
-
-        ArrayList<String> mealsHoursArrayList = new ArrayList<>();
-        for(Meal m:mealsBaseManager.giveByDay(day.getSelectedItem().toString())){
-            mealsHoursArrayList.add(m.getHour());
-        }
-
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mealsHoursArrayList);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mealToDelete.setAdapter(spinnerArrayAdapter);
-
-        mealToDeleteSpinnerListener();
-
-
-
-    }
-
-    private void mealToDeleteSpinnerListener() {
-        mealToDelete.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void listViewSetAdapter() {
+        mealsListView.setAdapter(new ArrayAdapter<String>(
+                getApplicationContext(),
+                android.R.layout.simple_list_item_1,
+                mealsArrayList){
             @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                fillPreviewForDeletedMeal();
-            }
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
 
-            private void fillPreviewForDeletedMeal() {
-                for(Meal m:mealsBaseManager.giveByHour(mealToDelete.getSelectedItem().toString())) {
-                    if (m.getDay().equals(day.getSelectedItem().toString())) {
-                        deletedMealPreview.setText(getResources().getString(R.string.preview)+ "\n" + m.getHour() + "  " + m.getMealName()+ "\n");
-                        for(ProdMeal p:prodMealBaseManager.giveByMealID(m.getId())){
-                            FoodProduct foodProduct = productsBaseManager.giveFoodProduct(p.getProdId());
-                            if(foodProduct.isGramsOrPieces())
-                                deletedMealPreview.setText(deletedMealPreview.getText() + "             " + foodProduct.getProductName() + " " + p.getQuantity() + getResources().getString(R.string.pieces) + "\n");
-                            else
-                                deletedMealPreview.setText(deletedMealPreview.getText() + "             " + foodProduct.getProductName() + " " + p.getQuantity() + getResources().getString(R.string.grams) + "\n");
-                        }
-                        break;
+                if (coloredItems.contains(position)) {
+                    v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentLightDelete));
+                } else {
+                    v.setBackgroundColor(Color.TRANSPARENT);
+                }
+
+                return v;
+            }
+        });
+    }
+
+    private void listViewOnItemClickListener() {
+        mealsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (coloredItems.contains(i)) {
+                    coloredItems.remove(coloredItems.indexOf(i));
+                    numberOfChosenNotifications--;
+                    view.setBackgroundColor(Color.TRANSPARENT);
+                    if(numberOfChosenNotifications==0){
+                        deleteMeal.setEnabled(FALSE);
+                        deleteMeal.setVisibility(View.GONE);
+                    }
+                }
+                else {
+                    coloredItems.add(i);
+                    numberOfChosenNotifications++;
+                    view.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentLightDelete));
+                    if(numberOfChosenNotifications>0){
+                        deleteMeal.setEnabled(TRUE);
+                        deleteMeal.setVisibility(View.VISIBLE);
                     }
                 }
             }
+        });
+    }
 
+    private void deleteMealOnClickListener() {
+        deleteMeal.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
+            public void onClick(View v) {
+                for(int i=0; i<sizeOfMealsList; i++) {
+                    if (coloredItems.contains(i)) {
+                        mealsBaseManager.deleteMeal(mealsId.get(i));
+                        Log.d("Log ", "Deleted meal " + String.valueOf(mealsId.get(i)));
 
+                        for (ProdMeal p : prodMealBaseManager.giveByMealID(mealsId.get(i))) {
+                            Log.d("Log ", "Deleted key " + String.valueOf(p.getId()));
+                            prodMealBaseManager.deleteKey(p.getId());
+                        }
+
+                    }
+                }
+
+                Intent intent = new Intent(DietActivity.this, DietActivity.class);
+                startActivity(intent);
             }
-
         });
     }
 

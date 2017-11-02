@@ -18,7 +18,6 @@
         android:text="@string/diet"
         android:id="@+id/dietBtn"
         android:onClick="click"
-        android:textColor="@color/colorPrimaryText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -28,7 +27,6 @@
         android:text="@string/shopping"
         android:id="@+id/shoppingBtn"
         android:onClick="click"
-        android:textColor="@color/colorPrimaryText"
         android:layout_below="@+id/dietBtn"
         android:layout_alignParentStart="true"
         android:layout_marginTop="@dimen/margin_bigger" />
@@ -42,7 +40,6 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/shoppingBtn"
         android:layout_marginTop="@dimen/margin_bigger"
-        android:textColor="@color/colorPrimaryText"
         android:text="@string/notifications"
         android:onClick="click"
         android:layout_alignParentEnd="true" />
@@ -54,7 +51,6 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/notificationsBtn"
         android:layout_marginTop="@dimen/margin_bigger"
-        android:textColor="@color/colorPrimaryText"
         android:text="@string/products"
         android:onClick="click"
         android:layout_alignParentEnd="true" />

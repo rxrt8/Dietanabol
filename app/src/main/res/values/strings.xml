@@ -7,7 +7,7 @@
     <string name="notifications">Powiadomienia</string>
     <string name="products">Produkty</string>
 
-    <string name="days_prompt">Zmień dzień tygodnia. W celu edycji diety kliknij w długopis poniżej.</string>
+    <string name="days_prompt">Zmień dzień tygodnia</string>
     <string name="add_meal">Dodaj posiłek</string>
     <string name="delete_meal">Usuń posiłek</string>
 
@@ -24,7 +24,7 @@
 
 
     <string name="add_product">Dodaj produkt</string>
-    <string name="delete_product">Usuń produkt</string>
+    <string name="delete_products">Usuń produkty</string>
     <string name="product_name">Nazwa produktu:</string>
     <string name="grams_or_pieces">Ilość gramy/sztuki:</string>
     <string name="is_regularly_purchased">Czy jest regularnie kupowany?</string>
@@ -56,7 +56,7 @@
     <string name="lack_of_quantity_and_hour">Uzupełnij aktualny posiłek przed dodaniem kolejnego.</string>
     <string name="product_to_delete">Który produkt chcesz usunąć?</string>
     <string name="cancel">Anuluj</string>
-    <string name="exit_without_deleting_product">Czy na pewno chcesz usunąć produkt? Wiąże się to z usunięciem wszystkich posiłków zawierających usunięty produkt.</string>
+    <string name="are_you_sure_you_want_to_delete_chosen_products">Czy na pewno chcesz usunąć wybrane produkty? Wiąże się to z usunięciem wszystkich posiłków zawierających usunięty produkt.</string>
     <string name="delete_and_save">Usuń i zapisz</string>
     <string name="quantity_greater_than_zero">Wprowadź liczbę większą od zera.</string>
     <string name="exit_because_there_is_no_product">Nie posiadasz żadnych produktów. Wprowadź nowy produkt w zakładce PRODUKTY przed utworzeniem nowego posiłku.</string>
@@ -71,6 +71,8 @@
     <string name="exit_because_there_is_no_product_which_is_regularly_purchased">Nie posiadasz żadnych produktów, które są regularnie kupowane i używane w diecie. Wprowadź nowy produkt w zakładce PRODUKTY przed zrobieniem zakupów. Jeśli masz taki produkt, stwórz z niego nowy posiłek w zakładce DIETA.</string>
     <string name="product_name_is_not_unique">Masz już produkt o takiej nazwie.</string>
     <string name="meal_hour_is_not_unique">Masz już posiłek tego dnia, o tej godzinie.</string>
+    <string name="regularly_purchased">Produkt regularnie kupowany</string>
+    <string name="is_not_regularly_purchased">Produkt nie regularnie kupowany</string>
 
     <string-array name="types_of_meal">
         <item>Śniadanie</item>

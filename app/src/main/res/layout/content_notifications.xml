@@ -27,7 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/addNewNotificationBtn"
         android:layout_alignParentEnd="true"
-        android:textColor="@color/colorPrimaryText"
         android:text="@string/delete_notifications" />
 
     <ListView
@@ -35,7 +34,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_bigger"
-        android:textColor="@color/colorPrimaryText"
         android:layout_below="@+id/addNewNotificationBtn" />
 
 </RelativeLayout>

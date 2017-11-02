@@ -3,18 +3,24 @@ package com.example.rxrt8.dietanabol;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -22,20 +28,18 @@ import static java.lang.Boolean.TRUE;
 
 public class ProductsActivity extends AppCompatActivity {
 
-    private TextView productsID;
-    private TextView productsName;
-    private TextView productsGramsOrPieces;
-    private TextView productsIsRegularlyPurchased;
-    private TextView productsQuantity;
-    private TextView productToDeleteTV;
-    private Spinner productToDelete;
+
     private Button addProduct;
     private Button deleteProduct;
-    private Button cancel;
-    private Button saveAndDelete;
+    private ListView productsListView;
+    private List<String> productsArrayList = new ArrayList<>();
+    private List<Integer> productsId = new ArrayList<>();
+    private int sizeOfProductsList = 0;
+    private int numberOfChosenNotifications = 0;
     private final MealsBaseManager mealsBaseManager = new MealsBaseManager(this);
     private final ProdMealBaseManager prodMealBaseManager = new ProdMealBaseManager(this);
     private final ProductsBaseManager productsBaseManager = new ProductsBaseManager(this);
+    private final ArrayList<Integer> coloredItems = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,60 +52,160 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
     private void fillTheActivity() {
-
-        productsID = (TextView)findViewById(R.id.productsIDTV);
-        productsName = (TextView)findViewById(R.id.productsNameTV);
-        productsGramsOrPieces = (TextView)findViewById(R.id.productsGramsOrPiecesTV);
-        productsIsRegularlyPurchased = (TextView)findViewById(R.id.productsIsRegularlyPurchasedTV);
-        productsQuantity = (TextView)findViewById(R.id.productsQuantityTV);
-        productToDeleteTV = (TextView)findViewById(R.id.productToDeleteTV);
-        productToDelete = (Spinner)findViewById(R.id.productToDeleteSpinner);
         addProduct = (Button) findViewById(R.id.addProductBtn);
         deleteProduct = (Button) findViewById(R.id.deleteProductBtn);
-        cancel = (Button) findViewById(R.id.cancelProductDeletionBtn);
-        saveAndDelete = (Button) findViewById(R.id.saveAndDeleteProductBtn);
+        productsListView = (ListView) findViewById(R.id.productsLV);
 
-        productToDeleteTV.setVisibility(View.GONE);
-        productToDelete.setVisibility(View.GONE);
-        cancel.setVisibility(View.GONE);
-        saveAndDelete.setVisibility(View.GONE);
-        productToDelete.setEnabled(FALSE);
-        cancel.setEnabled(FALSE);
-        saveAndDelete.setEnabled(FALSE);
-        if(productsBaseManager.getLastId()==0)
-            deleteProduct.setEnabled(FALSE);
+        addProductOnClickListener();
+        fillProductsListView();
+        deleteProductOnClickListener();
 
-
-        fillTextViews();
+        deleteProduct.setEnabled(FALSE);
+        deleteProduct.setVisibility(View.GONE);
 
 
     }
 
+    private void addProductOnClickListener() {
+        addProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductsActivity.this, AddProductActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 
-    void fillTextViews(){
-        for(FoodProduct k:productsBaseManager.giveAll()){
-            productsID.setText(productsID.getText()+"\n"+ k.getTimesWhenProductWasNotPurchased());
-            productsName.setText(productsName.getText()+"\n"+k.getProductName());
-            if(k.isGramsOrPieces())
-                productsGramsOrPieces.setText(productsGramsOrPieces.getText()+"\n"+getResources().getString(R.string.pieces));
+    private void fillProductsListView() {
+        for(FoodProduct p:productsBaseManager.giveAll()){
+            StringBuilder tmp = new StringBuilder();
+            tmp.append(p.getProductName() + "\n");
+            if(p.isRegularlyPurchased())
+                tmp.append("  " + getResources().getString(R.string.regularly_purchased)+ "\n");
             else
-                productsGramsOrPieces.setText(productsGramsOrPieces.getText()+"\n"+getResources().getString(R.string.grams));
-            if(k.isRegularlyPurchased())
-                productsIsRegularlyPurchased.setText(productsIsRegularlyPurchased.getText()+"\n"+getResources().getString(R.string.yes));
+                tmp.append("  " + getResources().getString(R.string.is_not_regularly_purchased)+ "\n");
+            tmp.append("  " + p.getQuantity() + " ");
+            if(p.isGramsOrPieces())
+                tmp.append(getResources().getString(R.string.pieces) + "\n");
             else
-                productsIsRegularlyPurchased.setText(productsIsRegularlyPurchased.getText()+"\n"+getResources().getString(R.string.no));
-            productsQuantity.setText(productsQuantity.getText()+"\n"+k.getQuantity());
+                tmp.append(getResources().getString(R.string.grams) + "\n");
+            String value = new String(tmp);
+            productsArrayList.add(value);
+            sizeOfProductsList++;
+            productsId.add(p.getId());
         }
+
+        listViewSetAdapter();
+        listViewOnItemClickListener();
+
+
+
     }
+    private void listViewSetAdapter() {
+        productsListView.setAdapter(new ArrayAdapter<String>(
+                getApplicationContext(),
+                android.R.layout.simple_list_item_1,
+                productsArrayList){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+
+                if (coloredItems.contains(position)) {
+                    v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentLightDelete));
+                } else {
+                    v.setBackgroundColor(Color.TRANSPARENT);
+                }
+
+                return v;
+            }
+        });
+    }
+
+
+
+    private void listViewOnItemClickListener() {
+        productsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (coloredItems.contains(i)) {
+                    coloredItems.remove(coloredItems.indexOf(i));
+                    numberOfChosenNotifications--;
+                    view.setBackgroundColor(Color.TRANSPARENT);
+                    if(numberOfChosenNotifications==0){
+                        deleteProduct.setEnabled(FALSE);
+                        deleteProduct.setVisibility(View.GONE);
+                    }
+                }
+                else {
+                    coloredItems.add(i);
+                    numberOfChosenNotifications++;
+                    view.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentLightDelete));
+                    if(numberOfChosenNotifications>0){
+                        deleteProduct.setEnabled(TRUE);
+                        deleteProduct.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+    }
+
+
+    private void deleteProductOnClickListener() {
+        deleteProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMessageOKCancel(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteProductsAndMealsWhichHaveThisProduct();
+                    }
+                });
+
+            }
+
+            private void deleteProductsAndMealsWhichHaveThisProduct() {
+                for (int i = 0; i < sizeOfProductsList; i++) {
+                    if (coloredItems.contains(i)) {
+                        ArrayList<Integer> keysToDelete = new ArrayList<Integer>();
+                        productsBaseManager.deleteFoodProduct(productsId.get(i));
+
+                        for (ProdMeal k : prodMealBaseManager.giveByProdID(productsId.get(i))) {
+                            for(ProdMeal m: prodMealBaseManager.giveByMealID(k.getMealId())){
+                                keysToDelete.add(m.getId());
+                            }
+                            Log.d("Log ","Deleted meal " + String.valueOf(k.getMealId()));
+                            mealsBaseManager.deleteMeal(k.getMealId());
+                        }
+                        for(Integer k:keysToDelete){
+                            Log.d("Log ","Deleted key " + String.valueOf(k));
+                            prodMealBaseManager.deleteKey(k);
+                        }
+                    }
+                }
+
+                Intent intent = new Intent(ProductsActivity.this, ProductsActivity.class);
+                startActivity(intent);
+
+            }
+        });
+    }
+
 
     private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(ProductsActivity.this)
-                .setMessage(getResources().getString(R.string.exit_without_deleting_product))
-                .setPositiveButton(getResources().getString(R.string.i_want_to_exit), okListener)
-                .setNegativeButton(getResources().getString(R.string.i_want_to_stay), null)
+                .setMessage(getResources().getString(R.string.are_you_sure_you_want_to_delete_the_products))
+                .setPositiveButton(getResources().getString(R.string.cancel), null)
+                .setNegativeButton(getResources().getString(R.string.delete_products), okListener)
                 .create()
                 .show();
     }
+
+
+
+/*
+
+
+
 
     public void click(View view){
         switch(view.getId()){
@@ -197,5 +301,5 @@ public class ProductsActivity extends AppCompatActivity {
         productToDelete.setAdapter(spinnerArrayAdapter);
 
     }
-
+    */
 }

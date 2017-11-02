@@ -5,6 +5,7 @@
     <color name="colorPrimaryLight">#F5F5F5</color>
     <color name="colorAccent">#009688</color>
     <color name="colorAccentLight">#B2DFDB</color>
+    <color name="colorAccentLightDelete">#dfb2b6</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
 

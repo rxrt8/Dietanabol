@@ -19,7 +19,6 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:layout_alignParentStart="true"
-        android:textColor="@color/colorPrimaryText"
         android:hint="@string/product_name" />
 
 
@@ -30,8 +29,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/productNameET"
         android:layout_marginTop="@dimen/margin_bigger"
-        android:text="@string/grams_or_pieces"
-        android:textColor="@color/colorSecondaryText"/>
+        android:text="@string/grams_or_pieces"/>
 
     <Switch
         android:id="@+id/isRegularlyPurchasedSwitch"
@@ -40,8 +38,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/gramsOrPiecesSwitch"
         android:layout_marginTop="@dimen/margin_bigger"
-        android:text="@string/is_regularly_purchased"
-        android:textColor="@color/colorSecondaryText"/>
+        android:text="@string/is_regularly_purchased"/>
 
 
 

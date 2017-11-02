@@ -99,7 +99,7 @@ public class NotificationsActivity extends AppCompatActivity {
                 View v = super.getView(position, convertView, parent);
 
                 if (coloredItems.contains(position)) {
-                    v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentLight));
+                    v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentLightDelete));
                 } else {
                     v.setBackgroundColor(Color.TRANSPARENT);
                 }
@@ -125,7 +125,7 @@ public class NotificationsActivity extends AppCompatActivity {
                 else {
                     coloredItems.add(i);
                     numberOfChosenNotifications++;
-                    view.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentLight));
+                    view.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentLightDelete));
                     if(numberOfChosenNotifications>0){
                         deleteNotification.setEnabled(TRUE);
                         deleteNotification.setVisibility(View.VISIBLE);
