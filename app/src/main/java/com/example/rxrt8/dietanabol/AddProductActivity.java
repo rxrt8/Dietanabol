@@ -40,18 +40,38 @@ public class AddProductActivity extends AppCompatActivity {
         gramsOrPieces = (Switch) findViewById(R.id.gramsOrPiecesSwitch);
         isRegularlyPurchased = (Switch) findViewById(R.id.isRegularlyPurchasedSwitch);
 
+        floatingActionButtonListener();
+
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method is called when fab is clicked.
+     * Method is responsible for adding a product to the base.
+     * At the end change intent to NotificationsActivity.
+     */
+    private void floatingActionButtonListener() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 FoodProduct p = productsBaseManager.giveByName(productName.getText().toString());
+                checkIfProductNameIsUnique(p, view);
+                ifPossibleCreateAProduct();
 
-                if(p.getId()!=-1){
-                    productName.setText("");
-                    Snackbar.make(view, getResources().getString(R.string.product_name_is_not_unique), Snackbar.LENGTH_LONG)
+                /**
+                 * this if will called only if product can't be created
+                 * */
+                if(p.getId()==-1){
+                    Snackbar.make(view, getResources().getString(R.string.lack_of_product), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    }
+                }
+            }
+
+            private void ifPossibleCreateAProduct() {
                 if(productName.getText().length()!=0) {
                     FoodProduct foodProduct = new FoodProduct();
                     foodProduct.setProductName(productName.getText().toString());
@@ -61,16 +81,22 @@ public class AddProductActivity extends AppCompatActivity {
                     Intent intent = new Intent(AddProductActivity.this, ProductsActivity.class);
                     startActivity(intent);
                 }
-                else if(p.getId()==-1){
-                    Snackbar.make(view, getResources().getString(R.string.lack_of_product), Snackbar.LENGTH_LONG)
+            }
+
+            private void checkIfProductNameIsUnique(FoodProduct foodProduct, View view) {
+                if(foodProduct.getId()!=-1){
+                    productName.setText("");
+                    Snackbar.make(view, getResources().getString(R.string.product_name_is_not_unique), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }
         });
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * This method is called when android.R.id.home is clicked.
+     * Ask the user if he wants to exit without saving changes.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home && productName.getText().length()!=0){

@@ -90,5 +90,12 @@
     <string name="title_activity_add_notification">AddNotificationActivity</string>
     <string name="notify_title">Tytuł powiadomienia</string>
     <string name="lack_of_notification">Wprowadź poprawnie powiadomienie przed zapisaniem.</string>
+    <string name="app_info">Aplikacja ma pomóc w utrzymaniu diety. W zakładce PRODUKTY tworzymy produkty z których budujemy
+        posiłki w zakładce DIETA. Aplikacja na podstawie posiłków automatycznie generuje listę zakupów. W zakładce POWIADOMIENIA
+        możemy stworzyć własne powiadomienia takie jak przypomnienie o ugotowaniu posiłku. Pod powyższym menu jest napisany aktualny
+        układ rąk w danym tygodniu dotyczący niektórych ćwiczeń na siłowni.</string>
+    <string name="position_of_hands">Pozycja rąk:</string>
+    <string name="reverse_close_grip">podchwyt / nachwyt</string>
+    <string name="close_reverse_grip">nachwyt / podchwyt</string>
 
 </resources>

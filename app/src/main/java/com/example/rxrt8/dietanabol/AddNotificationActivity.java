@@ -44,7 +44,11 @@ public class AddNotificationActivity extends AppCompatActivity {
         floatingActionButtonListener();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    /**
+     * This method is called when fab is clicked.
+     * Method is responsible for adding a notification  to the base.
+     * At the end change intent to NotificationsActivity.
+     */
     private void floatingActionButtonListener() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +101,9 @@ public class AddNotificationActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method is called when hourButton is clicked.
+     */
     public void setAnHour(View view) {
         Calendar mCurrentTime = Calendar.getInstance();
         int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -121,6 +128,10 @@ public class AddNotificationActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method is called when android.R.id.home is clicked.
+     * Ask the user if he wants to exit without saving changes.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home && notificationTitle.getText().length()!=0 && hourTV.getText().length()!=0){

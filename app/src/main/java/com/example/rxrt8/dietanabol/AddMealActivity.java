@@ -40,7 +40,7 @@ public class AddMealActivity extends AppCompatActivity {
     private TextView hourTV;
     private TextView preview;
     private EditText quantity;
-    private ArrayList<String> productsName;
+    private ArrayList<String> productsName = new ArrayList<>();
     private ArrayList<Integer> prodMealKeys = new ArrayList<>();
     private int numberOfIngredients = 0;
     private Spinner ingredient;
@@ -87,7 +87,6 @@ public class AddMealActivity extends AppCompatActivity {
 
 
     private void fillIngredientSpinner() {
-        productsName = new ArrayList<>();
         for(FoodProduct k:productsBaseManager.giveAll()){
             productsName.add(k.getProductName());
         }
@@ -100,9 +99,8 @@ public class AddMealActivity extends AppCompatActivity {
         ingredient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                boolean isGramsOrPieces = FALSE;
                 FoodProduct f = productsBaseManager.giveByName(ingredient.getSelectedItem().toString());
-                    isGramsOrPieces = f.isGramsOrPieces();
+                boolean isGramsOrPieces = f.isGramsOrPieces();
 
                 gramsOrPieces.setChecked(isGramsOrPieces);
             }
@@ -114,19 +112,29 @@ public class AddMealActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method is called when fab is clicked.
+     * Method is responsible for adding a meal and prodMeal keys to the base.
+     * If meal can be created, then method change intent to DietActivity.
+     */
     private void floatingActionButtonListener() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!createdMeal)
-                    for(Meal m:mealsBaseManager.giveByHour(hourTV.getText().toString()))
-                        if (m.getDay().equals(dayOfTheWeek.getSelectedItem().toString())) {
-                            hourTV.setText("");
-                            Snackbar.make(view, getResources().getString(R.string.meal_hour_is_not_unique), Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                            hourIsCorrect = FALSE;
-                        }
+                checkIfMealHourIsUnique(view);
+                ifPossibleCreateAMeal(view);
+                /**
+                 * this if will call only if meal can't be created
+                 * */
+                if(hourIsCorrect){
+                    Snackbar.make(view, getResources().getString(R.string.lack_of_meal), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+
+
+            private void ifPossibleCreateAMeal(View view) {
                 if(numberOfIngredients!=0 || hourTV.getText().length()!=0&&quantity.getText().length()!=0&&Integer.parseInt(quantity.getText().toString())>0) {
                     if(!createdMeal) {
                         Meal meal = new Meal();
@@ -140,18 +148,50 @@ public class AddMealActivity extends AppCompatActivity {
                     Intent intent = new Intent(AddMealActivity.this, DietActivity.class);
                     startActivity(intent);
                 }
-                else if(hourIsCorrect){
-                    Snackbar.make(view, getResources().getString(R.string.lack_of_meal), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
             }
         });
     }
 
 
 
+    private boolean AddNewIngredientToMealAndProdMealKeyToDatabase(){
+        if(hourTV.getText().length()!=0&&quantity.getText().length()!=0 && Integer.parseInt(quantity.getText().toString())>0) {
+            dayOfTheWeek.setEnabled(FALSE);
+            typeOfMeal.setEnabled(FALSE);
+            hourButton.setEnabled(FALSE);
+            numberOfIngredients++;
 
+            FoodProduct f = productsBaseManager.giveByName(ingredient.getSelectedItem().toString());
+            ProdMeal prodMeal = new ProdMeal();
+            prodMeal.setMealId(mealsBaseManager.getLastId());
+            prodMeal.setProdId(f.getId());
+            prodMeal.setQuantity(Integer.parseInt(quantity.getText().toString()));
+            productsBaseManager.changeTheAmountOfFood(f, prodMeal.getQuantity());
+            prodMealBaseManager.addKey(prodMeal);
+            prodMealKeys.add(prodMealBaseManager.getLastId());
+
+            quantity.setText("");
+            fillPreview();
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    /**
+     * This method is called when addNextIngredientBtn or fab is clicked.
+     */
     public void addNextIngredient(View view){
+        checkIfMealHourIsUnique(view);
+        ifPossibleCreateAMealWhenButtonAddNextIngredientIsClicked();
+
+        if(!AddNewIngredientToMealAndProdMealKeyToDatabase() && hourIsCorrect){
+            Snackbar.make(view, getResources().getString(R.string.lack_of_quantity_and_hour), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+
+    }
+
+    private void checkIfMealHourIsUnique(View view) {
         if(!createdMeal)
             for(Meal m:mealsBaseManager.giveByHour(hourTV.getText().toString()))
                 if (m.getDay().equals(dayOfTheWeek.getSelectedItem().toString())) {
@@ -160,6 +200,9 @@ public class AddMealActivity extends AppCompatActivity {
                             .setAction("Action", null).show();
                     hourIsCorrect = FALSE;
                 }
+    }
+
+    private void ifPossibleCreateAMealWhenButtonAddNextIngredientIsClicked(){
         if(numberOfIngredients==0 && !createdMeal && Integer.parseInt(quantity.getText().toString())>0 && hourTV.getText().length()!=0 && hourIsCorrect){
             Meal meal = new Meal();
             meal.setMealName(typeOfMeal.getSelectedItem().toString());
@@ -168,30 +211,8 @@ public class AddMealActivity extends AppCompatActivity {
             mealsBaseManager.addMeal(meal);
             createdMeal = TRUE;
         }
-        if(hourTV.getText().length()!=0&&quantity.getText().length()!=0 && Integer.parseInt(quantity.getText().toString())>0) {
-            dayOfTheWeek.setEnabled(FALSE);
-            typeOfMeal.setEnabled(FALSE);
-            hourButton.setEnabled(FALSE);
-            numberOfIngredients++;
-
-            FoodProduct f = productsBaseManager.giveByName(ingredient.getSelectedItem().toString());
-                ProdMeal prodMeal = new ProdMeal();
-                prodMeal.setMealId(mealsBaseManager.getLastId());
-                prodMeal.setProdId(f.getId());
-                prodMeal.setQuantity(Integer.parseInt(quantity.getText().toString()));
-                productsBaseManager.changeTheAmountOfFood(f, prodMeal.getQuantity());
-                prodMealBaseManager.addKey(prodMeal);
-                prodMealKeys.add(prodMealBaseManager.getLastId());
-
-            quantity.setText("");
-            fillPreview();
-        }
-        else if(hourIsCorrect){
-            Snackbar.make(view, getResources().getString(R.string.lack_of_quantity_and_hour), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        }
-
     }
+
 
     private void fillPreview(){
         preview.setText(getResources().getString(R.string.preview) + "\n" + hourTV.getText().toString() + "  "
@@ -205,6 +226,9 @@ public class AddMealActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is called when hourButton is clicked.
+     */
     public void setAnHour(View view) {
         Calendar mCurrentTime = Calendar.getInstance();
         int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -257,10 +281,10 @@ public class AddMealActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
+    /**
+     * This method is called when android.R.id.home is clicked.
+     * Ask the user if he wants to exit without saving changes.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home && numberOfIngredients != 0){
@@ -282,6 +306,7 @@ public class AddMealActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
 
     private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(AddMealActivity.this)

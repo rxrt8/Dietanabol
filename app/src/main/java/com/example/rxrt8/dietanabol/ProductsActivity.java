@@ -193,113 +193,11 @@ public class ProductsActivity extends AppCompatActivity {
 
     private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(ProductsActivity.this)
-                .setMessage(getResources().getString(R.string.are_you_sure_you_want_to_delete_the_products))
+                .setMessage(getResources().getString(R.string.are_you_sure_you_want_to_delete_chosen_products))
                 .setPositiveButton(getResources().getString(R.string.cancel), null)
                 .setNegativeButton(getResources().getString(R.string.delete_products), okListener)
                 .create()
                 .show();
     }
 
-
-
-/*
-
-
-
-
-    public void click(View view){
-        switch(view.getId()){
-            case R.id.addProductBtn:
-                Intent intent = new Intent(ProductsActivity.this, AddProductActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.deleteProductBtn:
-                deleteProductView();
-                break;
-            case R.id.cancelProductDeletionBtn:
-                cancelProductDeletion();
-                break;
-            case R.id.saveAndDeleteProductBtn:
-                deleteProductAndMealsWhichHaveThisProduct();
-                break;
-        }
-    }
-
-    private void deleteProductAndMealsWhichHaveThisProduct() {
-        ArrayList<Integer> keysToDelete = new ArrayList<Integer>();
-        int prodID = 0;
-        FoodProduct f = productsBaseManager.giveByName(productToDelete.getSelectedItem().toString());
-            prodID = f.getId();
-            productsBaseManager.deleteFoodProduct(f.getId());
-
-        if(prodID!=0) {
-            for (ProdMeal k : prodMealBaseManager.giveByProdID(prodID)) {
-                for(ProdMeal m: prodMealBaseManager.giveByMealID(k.getMealId())){
-                    keysToDelete.add(m.getId());
-                }
-                Log.d("Log ","Deleted meal " + String.valueOf(k.getMealId()));
-                mealsBaseManager.deleteMeal(k.getMealId());
-            }
-            for(Integer k:keysToDelete){
-                Log.d("Log ","Deleted key " + String.valueOf(k));
-                prodMealBaseManager.deleteKey(k);
-            }
-        }
-
-        Intent intent = new Intent(ProductsActivity.this, ProductsActivity.class);
-        startActivity(intent);
-    }
-
-    private void cancelProductDeletion() {
-        productToDeleteTV.setVisibility(View.GONE);
-        productToDelete.setVisibility(View.GONE);
-        productsID.setVisibility(View.VISIBLE);
-        productsName.setVisibility(View.VISIBLE);
-        productsGramsOrPieces.setVisibility(View.VISIBLE);
-        productsIsRegularlyPurchased.setVisibility(View.VISIBLE);
-        productsQuantity.setVisibility(View.VISIBLE);
-        cancel.setVisibility(View.GONE);
-        saveAndDelete.setVisibility(View.GONE);
-
-        productToDelete.setEnabled(FALSE);
-        addProduct.setEnabled(TRUE);
-        deleteProduct.setEnabled(TRUE);
-        cancel.setEnabled(FALSE);
-        saveAndDelete.setEnabled(FALSE);
-    }
-
-    private void deleteProductView() {
-        showMessageOKCancel(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                cancelProductDeletion();
-            }
-        });
-        productToDeleteTV.setVisibility(View.VISIBLE);
-        productToDelete.setVisibility(View.VISIBLE);
-        productsID.setVisibility(View.GONE);
-        productsName.setVisibility(View.GONE);
-        productsGramsOrPieces.setVisibility(View.GONE);
-        productsIsRegularlyPurchased.setVisibility(View.GONE);
-        productsQuantity.setVisibility(View.GONE);
-        cancel.setVisibility(View.VISIBLE);
-        saveAndDelete.setVisibility(View.VISIBLE);
-
-        productToDelete.setEnabled(TRUE);
-        addProduct.setEnabled(FALSE);
-        deleteProduct.setEnabled(FALSE);
-        cancel.setEnabled(TRUE);
-        saveAndDelete.setEnabled(TRUE);
-
-        ArrayList<String> productsNameArrayList = new ArrayList<>();
-        for(FoodProduct k:productsBaseManager.giveAll()){
-            productsNameArrayList.add(k.getProductName());
-        }
-
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, productsNameArrayList);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        productToDelete.setAdapter(spinnerArrayAdapter);
-
-    }
-    */
 }

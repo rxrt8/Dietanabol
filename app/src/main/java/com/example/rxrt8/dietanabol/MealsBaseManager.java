@@ -74,6 +74,11 @@ public class MealsBaseManager extends SQLiteOpenHelper {
         return fillMealsList(cursor);
     }
 
+    /**
+     *  Method which iterate records in table Meals.
+     * @param cursor used to iterate in table Meals
+     * @return list of meals from the table Meals
+     */
     private List<Meal> fillMealsList(Cursor cursor){
         List<Meal> meals = new LinkedList<Meal>();
         while(cursor.moveToNext()){

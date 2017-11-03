@@ -14,6 +14,7 @@ import java.util.Calendar;
 
 /**
  * Created by rxrt8 on 2017-10-30.
+ * Class create notification in Android at a specific time.
  */
 
 public class AlarmReceiver extends BroadcastReceiver {

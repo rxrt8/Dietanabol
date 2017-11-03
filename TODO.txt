@@ -1,0 +1,5 @@
+Add methods such as onResume to avoid information loss when smartphone change it's position
+Protect against backing in the application with a physical button
+improve the hierarchy of inheritance
+Logo
+Improve database part of application 

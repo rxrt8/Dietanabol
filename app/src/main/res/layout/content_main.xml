@@ -55,6 +55,14 @@
         android:onClick="click"
         android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:id="@+id/positionOfHandsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/productsBtn"
+        android:layout_marginTop="@dimen/margin_bigger"
+        android:text="@string/position_of_hands" />
 
 
 </RelativeLayout>

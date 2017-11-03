@@ -122,6 +122,11 @@ class ProdMealBaseManager extends SQLiteOpenHelper {
         return fillProdMealList(cursor);
     }
 
+    /**
+     * Method which iterate records in table Products.
+     * @param cursor used to iterate in table Products.
+     * @return list of meals from the table Products;
+     */
     private List<ProdMeal> fillProdMealList(Cursor cursor){
         List<ProdMeal> keys = new LinkedList<ProdMeal>();
         while(cursor.moveToNext()){

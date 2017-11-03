@@ -62,8 +62,6 @@ public class NotificationsActivity extends AppCompatActivity {
         fillNotificationsListView();
         deleteNotificationOnClickListener();
 
-
-
     }
 
 
