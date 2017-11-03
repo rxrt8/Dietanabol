@@ -1,4 +1,5 @@
 # Dietanabol
+# Introduction:
 Android Application which was created to help in keeping the diet. 
 The main purpose of this application was to provide a convenient view of the current diet and an automatically generated shopping list.
 
